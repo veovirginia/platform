@@ -58,7 +58,7 @@ export const SEVEN_DAYS_IN_SECONDS = 604800;
 function text({ url, host }: Record<"url" | "host", string>) {
   const urlBuffer = Buffer.from(encodeURIComponent(url));
   const base64URL = urlBuffer.toString("base64");
-  const emailURL = `${process.env.NEXT_PUBLIC_NEXTAUTH_URL}/access/${base64URL}`;
+  const emailURL = `${process.env.NEXT_PUBLIC_NEXTAUTH_URL}/signin/${base64URL}`;
   return `Sign in to ${host}\n${emailURL}\n\n`;
 }
 
@@ -128,6 +128,7 @@ const EmailProvider = Email({
     provider: { server, from },
   }) {
     const { host } = new URL(url);
+    console.log("host", host);
     const transport = nodemailer.createTransport(server as SMTPTransport);
     await transport.sendMail({
       to: email,
