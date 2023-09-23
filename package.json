@@ -4,8 +4,9 @@
   "private": true,
   "scripts": {
     "build": "next build",
-    "db:push": "prisma db push",
-    "dev": "next dev",
+    "db:generate": "doppler run npx prisma generate",
+    "db:studio": "doppler run npx prisma studio",
+    "dev": "doppler run next dev",
     "postinstall": "prisma generate",
     "lint": "next lint",
     "start": "next start"
