@@ -1,63 +1,15 @@
 import { type NextPage, type GetServerSidePropsContext } from "next";
-import { getSession, signIn } from "next-auth/react";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import * as z from "zod";
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-
-const formSchema = z.object({
-  email: z.string().email({ message: "Must be a valid email address." }),
-});
+import { getSession } from "next-auth/react";
+import DefaultLayout from "@/components/layouts/DefaultLayout";
+import SigninForm from "@/components/forms/SigninForm";
 
 const Signin: NextPage = () => {
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      email: "",
-    },
-  });
-
-  const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    await signIn("email", values);
-  };
-
   return (
-    <div className="min-h-screen w-full bg-neutral-900 p-4">
-      <Form {...form}>
-        <form
-          onSubmit={(event) => void form.handleSubmit(onSubmit)(event)}
-          className=""
-        >
-          <FormField
-            control={form.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Username</FormLabel>
-                <FormControl>
-                  <Input placeholder="email" {...field} />
-                </FormControl>
-                <FormDescription>
-                  This is your public display name.
-                </FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <Button type="submit">sign in</Button>
-        </form>
-      </Form>
-    </div>
+    <DefaultLayout>
+      <div className="flex w-full flex-1 justify-center pt-24 lg:pt-48">
+        <SigninForm />
+      </div>
+    </DefaultLayout>
   );
 };
 

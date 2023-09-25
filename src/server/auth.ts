@@ -55,63 +55,6 @@ declare module "next-auth" {
 
 export const SEVEN_DAYS_IN_SECONDS = 604800;
 
-function text({ url, host }: Record<"url" | "host", string>) {
-  const urlBuffer = Buffer.from(encodeURIComponent(url));
-  const base64URL = urlBuffer.toString("base64");
-  const emailURL = `${process.env.NEXT_PUBLIC_NEXTAUTH_URL}/signin/${base64URL}`;
-  return `Sign in to ${host}\n${emailURL}\n\n`;
-}
-
-function html({ url, host, email }: Record<"url" | "host" | "email", string>) {
-  const escapedEmail = `${email.replace(/\./g, "&#8203;.")}`;
-  const escapedHost = `${host.replace(/\./g, "&#8203;.")}`;
-
-  const backgroundColor = "#030303";
-
-  const textColor = "#d4d4d8";
-  const mainBackgroundColor = "#121212";
-  const buttonBackgroundColor = "#fafafa";
-  const buttonBorderColor = "#fafafa";
-  const buttonTextColor = "#030303";
-
-  const urlBuffer = Buffer.from(encodeURIComponent(url));
-  const base64URL = urlBuffer.toString("base64");
-  const emailURL = `${process.env.NEXT_PUBLIC_NEXTAUTH_URL}/access/${base64URL}`;
-
-  return `
-  <body style="background: ${backgroundColor};">
- <table width="100%" border="0" cellspacing="0" cellpadding="0">
-   <tr>
-     <td align="center" style="padding: 10px 0px 20px 0px; font-size: 22px; font-family: Helvetica, Arial, sans-serif; color: ${textColor};">
-       <strong>${escapedHost}</strong>
-     </td>
-   </tr>
- </table>
- <table width="100%" border="0" cellspacing="20" cellpadding="0" style="background: ${mainBackgroundColor}; max-width: 600px; margin: auto; border-radius: 10px;">
-   <tr>
-     <td align="center" style="padding: 10px 0px 0px 0px; font-size: 18px; font-family: Helvetica, Arial, sans-serif; color: ${textColor};">
-       Sign in as <strong>${escapedEmail}</strong>
-     </td>
-   </tr>
-   <tr>
-     <td align="center" style="padding: 20px 0;">
-       <table border="0" cellspacing="0" cellpadding="0">
-         <tr>
-           <td align="center" style="border-radius: 5px;" bgcolor="${buttonBackgroundColor}"><a href="${emailURL}" target="_blank" style="font-size: 18px; font-family: Helvetica, Arial, sans-serif; color: ${buttonTextColor}; text-decoration: none; border-radius: 5px; padding: 10px 20px; border: 1px solid ${buttonBorderColor}; display: inline-block; font-weight: bold;">Sign in</a></td>
-         </tr>
-       </table>
-     </td>
-   </tr>
-   <tr>
-     <td align="center" style="padding: 0px 0px 10px 0px; font-size: 16px; line-height: 22px; font-family: Helvetica, Arial, sans-serif; color: ${textColor};">
-       If you did not request this email you can safely ignore it.
-     </td>
-   </tr>
- </table>
-</body>
-`;
-}
-
 const EmailProvider = Email({
   server: {
     host: env.EMAIL_HOST,
@@ -122,22 +65,6 @@ const EmailProvider = Email({
     },
   },
   from: `Virginia Entrepreneurship Organization <${env.EMAIL_FROM}>`,
-  async sendVerificationRequest({
-    identifier: email,
-    url,
-    provider: { server, from },
-  }) {
-    const { host } = new URL(url);
-    console.log("host", host);
-    const transport = nodemailer.createTransport(server as SMTPTransport);
-    await transport.sendMail({
-      to: email,
-      from,
-      subject: `Sign in to ${host}`,
-      text: text({ url, host }),
-      html: html({ url, host, email }),
-    });
-  },
 });
 
 interface SessionCallbackParams {
@@ -168,7 +95,7 @@ export const authOptions: NextAuthOptions = {
   providers: [EmailProvider],
   pages: {
     signIn: "/signin",
-    newUser: "/onboard",
+    newUser: "/platform/onboard",
   },
   secret: env.NEXTAUTH_SECRET,
   session: {
