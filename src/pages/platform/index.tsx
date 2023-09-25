@@ -17,6 +17,14 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
       },
     };
   }
+  if (!session.user.onboarded) {
+    return {
+      redirect: {
+        destination: "/platform/onboard",
+        permanent: true,
+      },
+    };
+  }
   return {
     props: {},
   };
