@@ -65,16 +65,32 @@ const OnboardStepOneForm: FC = () => {
         </div>
         <form
           onSubmit={(event) => void form.handleSubmit(onSubmit)(event)}
-          className="pt-4"
+          className="grid grid-cols-4 pt-4"
         >
           <FormField
             control={form.control}
-            name="email"
+            name="name"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Email</FormLabel>
+                <FormLabel>Full Name</FormLabel>
                 <FormControl>
-                  <Input placeholder="johndoe@virginia.edu" {...field} />
+                  <Input placeholder="John Doe" {...field} />
+                </FormControl>
+                <FormDescription>
+                  Your UVA student email address.
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="phone"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Full Name</FormLabel>
+                <FormControl>
+                  <Input placeholder="John Doe" {...field} />
                 </FormControl>
                 <FormDescription>
                   Your UVA student email address.
