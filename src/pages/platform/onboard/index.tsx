@@ -1,4 +1,3 @@
-import OnboardStepOneForm from "@/components/forms/OnboardStepOneForm";
 import DefaultLayout from "@/components/layouts/DefaultLayout";
 import { Button } from "@/components/ui/button";
 import HeadingTwo from "@/components/ui/headingTwo";
@@ -6,18 +5,20 @@ import Paragraph from "@/components/ui/paragraph";
 import { cn } from "@/lib/utils";
 import { type NextPage, type GetServerSidePropsContext } from "next";
 import { getSession } from "next-auth/react";
-import { useState } from "react";
+import { useAtom } from "jotai";
+import { stepAtom } from "@/components/atoms/onboardForm";
+import OnboardForm from "@/components/forms/OnboardForm";
+import { useHydrateAtoms } from "jotai/utils";
+
+const ONBOARD_STEPS = [
+  "Tell us about yourself",
+  "Schedule a coffee chat",
+  "Await verification",
+];
 
 const Onboard: NextPage = () => {
-  const [step, setStep] = useState<number>(0);
-
-  const nextPage = () => {
-    setStep((prev) => (prev += 1));
-  };
-
-  const prevPage = () => {
-    setStep((prev) => (prev -= 1));
-  };
+  useHydrateAtoms([[stepAtom, 0]]);
+  const [step] = useAtom(stepAtom);
   return (
     <DefaultLayout>
       <div className="flex w-full flex-1 justify-center pt-16">
@@ -30,73 +31,36 @@ const Onboard: NextPage = () => {
               </Paragraph>
             </div>
           </div>
-          <div className="grid grid-cols-3 gap-2 pb-2 text-sm text-muted-foreground">
-            <div>
-              <p className="">
-                1.{" "}
-                <span
-                  className={cn({ "font-medium text-[#08D9D6]": step === 0 })}
-                >
-                  Tell us about yourself
-                </span>
-              </p>
-            </div>
-            <div>
-              <p className="">
-                2.{" "}
-                <span
-                  className={cn({ "font-medium text-[#30E3CA]": step === 1 })}
-                >
-                  Schedule a coffee chat
-                </span>
-              </p>
-            </div>
-            <div>
-              <p className="">
-                3.{" "}
-                <span
-                  className={cn({ "font-medium text-[#30E3CA]": step === 1 })}
-                >
-                  Await verification
-                </span>
-              </p>
-            </div>
-          </div>
-          <div className="grid grid-cols-3 gap-2 pb-8">
-            <div
-              className={cn("h-1 w-full rounded-full", {
-                "bg-[#30E3CA]": step > 0,
-                "bg-muted": step <= 0,
-              })}
-            />
-            <div
-              className={cn("h-1 w-full rounded-full", {
-                "bg-[#30E3CA]": step > 1,
-                "bg-muted": step <= 1,
-              })}
-            />
-            <div
-              className={cn("h-1 w-full rounded-full", {
-                "bg-[#30E3CA]": step > 2,
-                "bg-muted": step <= 2,
-              })}
-            />
-          </div>
-          <div className="rounded border border-muted p-6">
-            <OnboardStepOneForm />
-            <div className="flex w-full items-center justify-end gap-4 pt-8">
-              <div className="">
-                <Button variant="ghost" type="submit">
-                  Previous
-                </Button>
+          <div className="grid grid-cols-3 gap-2 pb-8 text-sm text-muted-foreground">
+            {ONBOARD_STEPS.map((stepTitle, i) => (
+              <div key={stepTitle}>
+                <p className="pb-2">
+                  <span
+                    className={cn({
+                      "text-[#30E3CA]": step > i,
+                    })}
+                  >
+                    {i + 1}.{" "}
+                  </span>
+                  <span
+                    className={cn("font-medium", {
+                      "text-neutral-200": step === i,
+                      "text-[#30E3CA]": step > i,
+                    })}
+                  >
+                    {stepTitle}
+                  </span>
+                </p>
+                <div
+                  className={cn("h-1 w-full rounded-full", {
+                    "bg-[#30E3CA]": step > i,
+                    "bg-muted": step <= i,
+                  })}
+                />
               </div>
-              <div className="">
-                <Button variant="default" onClick={() => nextPage()}>
-                  Continue
-                </Button>
-              </div>
-            </div>
+            ))}
           </div>
+          <OnboardForm />
         </div>
       </div>
     </DefaultLayout>
@@ -105,25 +69,25 @@ const Onboard: NextPage = () => {
 
 export default Onboard;
 
-export async function getServerSideProps(ctx: GetServerSidePropsContext) {
-  // const session = await getSession(ctx);
-  // if (!session) {
-  //   return {
-  //     redirect: {
-  //       destination: "/signin",
-  //       permanent: true,
-  //     },
-  //   };
-  // }
-  // if (session.user.onboarded) {
-  //   return {
-  //     redirect: {
-  //       destination: "/platform",
-  //       permanent: true,
-  //     },
-  //   };
-  // }
-  return {
-    props: {},
-  };
-}
+// export async function getServerSideProps(ctx: GetServerSidePropsContext) {
+//   const session = await getSession(ctx);
+//   if (!session) {
+//     return {
+//       redirect: {
+//         destination: "/signin",
+//         permanent: true,
+//       },
+//     };
+//   }
+//   if (session.user.onboarded) {
+//     return {
+//       redirect: {
+//         destination: "/platform",
+//         permanent: true,
+//       },
+//     };
+//   }
+//   return {
+//     props: {},
+//   };
+// }
