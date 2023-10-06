@@ -13,19 +13,19 @@ import {
   FormMessage,
 } from "../ui/form";
 import { isValidPhoneNumber } from "react-phone-number-input";
-import { validStepOneAtom } from "../atoms/onboardForm";
+import { validStepOneAtom } from "../atoms/onboardFormAtom";
 import { useAtom } from "jotai";
 import { useHydrateAtoms } from "jotai/utils";
 
 const formSchema = z.object({
   name: z
     .string()
-    .min(2, "Name must be at least 2 characters.")
-    .max(128, "Name can not exceed 128 characters."),
+    .min(2, "Must be at least 2 characters.")
+    .max(128, "Can not exceed 128 characters."),
   phone: z
     .string({
-      required_error: "Phone number can not be empty.",
-      invalid_type_error: "Phone number can not be empty.",
+      required_error: "Can not be empty.",
+      invalid_type_error: "Can not be empty.",
     })
     .refine(
       (phone) => isValidPhoneNumber(phone),
@@ -36,10 +36,10 @@ const formSchema = z.object({
     .regex(/^(0[1-9]|1[0-2])\/([0-9]{2})$/g, "Must be a valid date."),
   major: z
     .string()
-    .min(4, "Major must be at least 4 characters.")
-    .max(128, "Must not exceed 32 characters.")
+    .min(4, "Must be at least 4 characters.")
+    .max(128, "Can not exceed 32 characters.")
     .regex(/^[a-zA-Z- ]+$/, "Must be a valid major"),
-  idea: z.string().max(128, "Must not exceed 128 characters."),
+  idea: z.string().max(128, "Can not exceed 128 characters."),
 });
 
 const OnboardStepOneForm: FC = () => {
@@ -126,7 +126,7 @@ const OnboardStepOneForm: FC = () => {
               <FormItem>
                 <FormLabel>Major</FormLabel>
                 <FormControl>
-                  <Input placeholder="John Doe" {...field} />
+                  <Input placeholder="Primary major" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -141,11 +141,10 @@ const OnboardStepOneForm: FC = () => {
               <FormItem>
                 <FormLabel>Idea</FormLabel>
                 <FormControl>
-                  <Input placeholder="The next big thing..." {...field} />
+                  <Input placeholder="Optional" {...field} />
                 </FormControl>
                 <FormDescription>
-                  (128 char) Feel free to provide details if you have a specific
-                  vision or concept in mind.
+                  {form.watch("idea").length}/128 characters
                 </FormDescription>
                 <FormMessage />
               </FormItem>

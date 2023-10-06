@@ -5,20 +5,13 @@ import Paragraph from "@/components/ui/paragraph";
 import { cn } from "@/lib/utils";
 import { type NextPage, type GetServerSidePropsContext } from "next";
 import { getSession } from "next-auth/react";
-import { useAtom } from "jotai";
-import { stepAtom } from "@/components/atoms/onboardForm";
+import { stepAtom } from "@/components/atoms/onboardFormAtom";
 import OnboardForm from "@/components/forms/OnboardForm";
 import { useHydrateAtoms } from "jotai/utils";
 
-const ONBOARD_STEPS = [
-  "Tell us about yourself",
-  "Schedule a coffee chat",
-  "Await verification",
-];
-
 const Onboard: NextPage = () => {
-  useHydrateAtoms([[stepAtom, 0]]);
-  const [step] = useAtom(stepAtom);
+  useHydrateAtoms([[stepAtom, 1]]);
+
   return (
     <DefaultLayout>
       <div className="flex w-full flex-1 justify-center pt-16">
@@ -30,35 +23,6 @@ const Onboard: NextPage = () => {
                 Complete the form to finalize your membership.
               </Paragraph>
             </div>
-          </div>
-          <div className="grid grid-cols-3 gap-2 pb-8 text-sm text-muted-foreground">
-            {ONBOARD_STEPS.map((stepTitle, i) => (
-              <div key={stepTitle}>
-                <p className="pb-2">
-                  <span
-                    className={cn({
-                      "text-[#30E3CA]": step > i,
-                    })}
-                  >
-                    {i + 1}.{" "}
-                  </span>
-                  <span
-                    className={cn("font-medium", {
-                      "text-neutral-200": step === i,
-                      "text-[#30E3CA]": step > i,
-                    })}
-                  >
-                    {stepTitle}
-                  </span>
-                </p>
-                <div
-                  className={cn("h-1 w-full rounded-full", {
-                    "bg-[#30E3CA]": step > i,
-                    "bg-muted": step <= i,
-                  })}
-                />
-              </div>
-            ))}
           </div>
           <OnboardForm />
         </div>
