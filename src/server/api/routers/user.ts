@@ -1,5 +1,4 @@
 import { z } from "zod";
-import _ from "lodash";
 import {
   createTRPCRouter,
   protectedProcedure,
@@ -9,14 +8,7 @@ import { isValidPhoneNumber } from "react-phone-number-input";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 import { TRPCError } from "@trpc/server";
 import { type User } from "@prisma/client";
-
-interface PickedUser {
-  name: string;
-  phone: string;
-  graduation: string;
-  major: string;
-  idea: string;
-}
+import { pick } from "radash";
 
 export const userRoute = createTRPCRouter({
   updateUser: protectedProcedure
@@ -70,7 +62,7 @@ export const userRoute = createTRPCRouter({
       }
     }),
 
-  getUser: protectedProcedure.query(async ({ ctx }) => {
+  getOnboardUser: protectedProcedure.query(async ({ ctx }) => {
     try {
       const user: User | null = await ctx.db.user.findUnique({
         where: {
@@ -79,14 +71,7 @@ export const userRoute = createTRPCRouter({
       });
 
       if (!user) return null;
-      return _.pick(
-        user,
-        "name",
-        "phone",
-        "graduation",
-        "major",
-        "idea",
-      ) as PickedUser;
+      return pick(user, ["name", "phone", "graduation", "major", "idea"]);
     } catch (error) {
       if (error instanceof PrismaClientKnownRequestError) {
         // TODO: Add logger for errors
