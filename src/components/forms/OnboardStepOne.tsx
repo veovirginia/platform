@@ -13,9 +13,10 @@ import {
   FormMessage,
 } from "../ui/form";
 import { isValidPhoneNumber } from "react-phone-number-input";
-import { validStepOneAtom } from "../atoms/onboardFormAtom";
+import { stepOneValuesAtom, validStepOneAtom } from "../atoms/onboardFormAtom";
 import { useAtom } from "jotai";
 import { useHydrateAtoms } from "jotai/utils";
+import { type OnboardStepOneValues } from "@/lib/types";
 
 const formSchema = z.object({
   name: z
@@ -44,7 +45,9 @@ const formSchema = z.object({
 
 const OnboardStepOneForm: FC = () => {
   useHydrateAtoms([[validStepOneAtom, false]]);
-  const [_, setFormValid] = useAtom(validStepOneAtom);
+  useHydrateAtoms([[stepOneValuesAtom, null]]);
+  const [_isFormValid, setFormValid] = useAtom(validStepOneAtom);
+  const [formValues, setFormValues] = useAtom(stepOneValuesAtom);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -58,20 +61,30 @@ const OnboardStepOneForm: FC = () => {
     mode: "onBlur",
   });
 
-  const onSubmit = (values: z.infer<typeof formSchema>) => {
-    console.log(values); // Handle your form submission logic
-  };
+  // const onSubmit = (values: z.infer<typeof formSchema>) => {
+  //   console.log(values); // Handle your form submission logic
+  // };
 
   useEffect(() => {
-    if (form.formState.isValid) setFormValid(true);
-    else setFormValid(false);
-  }, [form.formState.isValid, setFormValid]);
+    if (form.formState.isValid) {
+      setFormValid(true);
+      setFormValues({ ...form.getValues() });
+    } else setFormValid(false);
+  }, [form, form.formState.isValid, setFormValid, setFormValues]);
+
+  useEffect(() => {
+    if (formValues) {
+      Object.entries(formValues).forEach(([key, value]) => {
+        form.setValue(key as keyof OnboardStepOneValues, value as string);
+      });
+    }
+  }, []);
 
   return (
     <Form {...form}>
       <form
         className="grid grid-cols-4 gap-4 rounded border-muted"
-        onSubmit={(event) => void form.handleSubmit(onSubmit)(event)}
+        // onSubmit={(event) => void form.handleSubmit(onSubmit)(event)}
       >
         <div className="col-span-2">
           <FormField

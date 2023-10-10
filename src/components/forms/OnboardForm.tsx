@@ -1,13 +1,18 @@
 import OnboardStepOne from "./OnboardStepOne";
 import { Button } from "../ui/button";
 import { useAtom } from "jotai";
-import { stepAtom, validStepOneAtom } from "../atoms/onboardFormAtom";
+import {
+  stepAtom,
+  stepOneValuesAtom,
+  validStepOneAtom,
+} from "../atoms/onboardFormAtom";
 import OnboardStepTwo from "./OnboardStepTwo";
 import OnboardHeader from "./OnboardHeader";
 
 const OnboardForm = () => {
   const [step, setStep] = useAtom(stepAtom);
   const [isFormValid] = useAtom(validStepOneAtom);
+  // const [formValues] = useAtom(stepOneValuesAtom);
 
   const handlePrevious = () => {
     setStep((prev) => prev - 1);
@@ -16,6 +21,7 @@ const OnboardForm = () => {
   const handleNext = () => {
     if (step === 1) {
       // save form values to db
+      // console.log(formValues);
     }
 
     setStep((prev) => prev + 1);

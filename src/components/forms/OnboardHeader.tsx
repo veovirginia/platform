@@ -2,6 +2,7 @@ import { cn } from "@/lib/utils";
 import { type FC } from "react";
 import { stepAtom } from "../atoms/onboardFormAtom";
 import { useAtom } from "jotai";
+import { motion } from "framer-motion";
 
 const ONBOARD_STEPS = [
   "Tell us about yourself",
@@ -17,13 +18,22 @@ const OnboardHeader: FC = () => {
         i += 1;
         return (
           <div key={stepTitle}>
-            <p className="pb-2">
+            <span className="flex items-center space-x-2 pb-2">
               <span
                 className={cn({
                   "text-[#30E3CA]": step > i,
                 })}
               >
-                {i + 1}.{" "}
+                <div
+                  className={cn(
+                    "h-3 w-3 rounded-full border-2 bg-transparent",
+                    {
+                      "border-neutral-200": step === i,
+                      "border-[#30E3CA]": step > i,
+                      "border-neutral-600": step < i,
+                    },
+                  )}
+                ></div>
               </span>
               <span
                 className={cn("font-medium", {
@@ -33,13 +43,13 @@ const OnboardHeader: FC = () => {
               >
                 {stepTitle}
               </span>
-            </p>
-            <div
-              className={cn("h-1 w-full rounded-full", {
-                "bg-[#30E3CA]": step > i,
-                "bg-muted": step <= i,
-              })}
-            />
+            </span>
+            <div className={cn("relative h-1 w-full rounded-full bg-muted")}>
+              <motion.div
+                className="absolute left-0 top-0 h-full w-full rounded-full bg-[#30E3CA]"
+                animate={{ width: step > i ? "100%" : 0 }}
+              />
+            </div>
           </div>
         );
       })}
