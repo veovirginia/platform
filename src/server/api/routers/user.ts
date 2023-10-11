@@ -1,14 +1,11 @@
 import { z } from "zod";
-import {
-  createTRPCRouter,
-  protectedProcedure,
-  publicProcedure,
-} from "@/server/api/trpc";
+import { createTRPCRouter, protectedProcedure } from "@/server/api/trpc";
 import { isValidPhoneNumber } from "react-phone-number-input";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 import { TRPCError } from "@trpc/server";
 import { type User } from "@prisma/client";
 import { pick } from "radash";
+import { type OnboardStepOneValues } from "@/lib/types";
 
 export const userRoute = createTRPCRouter({
   updateUser: protectedProcedure
@@ -71,7 +68,13 @@ export const userRoute = createTRPCRouter({
       });
 
       if (!user) return null;
-      return pick(user, ["name", "phone", "graduation", "major", "idea"]);
+      return pick(user, [
+        "name",
+        "phone",
+        "graduation",
+        "major",
+        "idea",
+      ]) as OnboardStepOneValues;
     } catch (error) {
       if (error instanceof PrismaClientKnownRequestError) {
         // TODO: Add logger for errors
