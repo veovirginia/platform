@@ -4,6 +4,7 @@ import { useAtom } from "jotai";
 import {
   stepAtom,
   stepOneValuesAtom,
+  updateOnboardAtom,
   validStepOneAtom,
 } from "../atoms/onboardFormAtom";
 import OnboardStepTwo from "./OnboardStepTwo";
@@ -14,6 +15,7 @@ import { useEffect } from "react";
 const OnboardForm = () => {
   const [step, setStep] = useAtom(stepAtom);
   const [isFormValid] = useAtom(validStepOneAtom);
+  const [updateOnboard] = useAtom(updateOnboardAtom);
   const [formValues, setFormValues] = useAtom(stepOneValuesAtom);
 
   const { mutateAsync: updateUser } = api.user.updateUser.useMutation();
@@ -26,9 +28,9 @@ const OnboardForm = () => {
   const handleNext = async () => {
     if (step === 1) {
       // save form values to db
-      console.log(formValues);
       try {
-        await updateUser(formValues);
+        // Add check if dirty
+        updateOnboard && (await updateUser(formValues));
       } catch (e) {
         console.error(e);
       }

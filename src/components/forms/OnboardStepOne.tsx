@@ -13,7 +13,11 @@ import {
   FormMessage,
 } from "../ui/form";
 import { isValidPhoneNumber } from "react-phone-number-input";
-import { stepOneValuesAtom, validStepOneAtom } from "../atoms/onboardFormAtom";
+import {
+  stepOneValuesAtom,
+  updateOnboardAtom,
+  validStepOneAtom,
+} from "../atoms/onboardFormAtom";
 import { useAtom } from "jotai";
 import { useHydrateAtoms } from "jotai/utils";
 import { type OnboardStepOneValues } from "@/lib/types";
@@ -46,12 +50,14 @@ const formSchema = z.object({
 const OnboardStepOneForm: FC = () => {
   useHydrateAtoms([
     [validStepOneAtom, false],
+    [updateOnboardAtom, false],
     [
       stepOneValuesAtom,
       { name: "", phone: "", graduation: "", major: "", idea: "" },
     ],
   ]);
   const [_isFormValid, setFormValid] = useAtom(validStepOneAtom);
+  const [_updateOnboard, setUpdateOnboard] = useAtom(updateOnboardAtom);
   const [formValues, setFormValues] = useAtom(stepOneValuesAtom);
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -67,7 +73,7 @@ const OnboardStepOneForm: FC = () => {
   });
 
   const { control, formState, watch, setValue, trigger } = form;
-  const { isValid } = formState;
+  const { isValid, isDirty } = formState;
 
   useEffect(() => {
     isValid ? setFormValid(true) : setFormValid(false);
@@ -89,6 +95,10 @@ const OnboardStepOneForm: FC = () => {
     };
     loadValues().catch((e) => console.error(e));
   }, [formValues, setValue, trigger]);
+
+  useEffect(() => {
+    if (isDirty) setUpdateOnboard(true);
+  }, [isDirty, setUpdateOnboard]);
 
   return (
     <Form {...form}>
