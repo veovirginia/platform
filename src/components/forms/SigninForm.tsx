@@ -1,6 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signIn } from "next-auth/react";
-import { useState, type FC } from "react";
+import { useState, type FC, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Button } from "../ui/button";
@@ -79,7 +79,12 @@ const SigninForm: FC = () => {
     },
   });
 
+  const { formState, control, handleSubmit, getValues, reset } = form;
+  const { isSubmitted, isSubmitting, isValid, isDirty } = formState;
+
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    setSuccess(true);
+    setOpen(true);
     const response = await signIn("email", {
       email: values.email,
       redirect: false,
@@ -92,6 +97,10 @@ const SigninForm: FC = () => {
     }
     setOpen(true);
   };
+
+  useEffect(() => {
+    if (isSubmitted) reset(getValues(), { keepDirtyValues: true });
+  }, [isSubmitted]);
 
   return (
     <div className="w-full max-w-md">
@@ -111,17 +120,17 @@ const SigninForm: FC = () => {
           }}
         />
         <form
-          onSubmit={(event) => void form.handleSubmit(onSubmit)(event)}
+          onSubmit={(event) => void handleSubmit(onSubmit)(event)}
           className="pt-2"
         >
           <FormField
-            control={form.control}
+            control={control}
             name="email"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Email</FormLabel>
                 <FormControl>
-                  <Input placeholder="johndoe@virginia.edu" {...field} />
+                  <Input placeholder="computingId@virginia.edu" {...field} />
                 </FormControl>
                 <FormDescription>
                   Your UVA student email address.
@@ -134,7 +143,7 @@ const SigninForm: FC = () => {
             <Button
               variant="default"
               type="submit"
-              disabled={!form.formState.isValid}
+              disabled={isSubmitting || !isValid || !isDirty}
               className="w-full"
             >
               Continue
