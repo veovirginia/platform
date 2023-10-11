@@ -56,7 +56,7 @@ const OnboardStepOneForm: FC = () => {
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: formValues ?? {
+    defaultValues: {
       name: "",
       phone: "",
       graduation: "",
@@ -66,28 +66,36 @@ const OnboardStepOneForm: FC = () => {
     mode: "onBlur",
   });
 
+  const { control, formState, watch, setValue, trigger } = form;
+  const { isValid } = formState;
+
   useEffect(() => {
-    form.formState.isValid ? setFormValid(true) : setFormValid(false);
-  }, [form, form.formState.isValid, setFormValid]);
+    isValid ? setFormValid(true) : setFormValid(false);
+  }, [isValid, setFormValid]);
 
   const updateFormValue = (field: string, value: string) => {
     setFormValues((prev) => ({ ...prev, [field]: value }));
   };
 
   useEffect(() => {
-    if (formValues) {
-      Object.entries(formValues).forEach(([key, value]) => {
-        form.setValue(key as keyof OnboardStepOneValues, value as string);
-      });
-    }
-  }, [form, formValues]);
+    const loadValues = async () => {
+      if (formValues) {
+        Object.entries(formValues).forEach(([key, value]) => {
+          setValue(key as keyof OnboardStepOneValues, value as string);
+        });
+
+        await trigger();
+      }
+    };
+    loadValues().catch((e) => console.error(e));
+  }, [formValues, setValue, trigger]);
 
   return (
     <Form {...form}>
       <form className="grid grid-cols-4 gap-4 rounded border-muted">
         <div className="col-span-2">
           <FormField
-            control={form.control}
+            control={control}
             name="name"
             render={({ field }) => (
               <FormItem>
@@ -106,7 +114,7 @@ const OnboardStepOneForm: FC = () => {
         </div>
         <div className="col-span-2">
           <FormField
-            control={form.control}
+            control={control}
             name="phone"
             render={({ field }) => (
               <FormItem>
@@ -126,7 +134,7 @@ const OnboardStepOneForm: FC = () => {
         </div>
         <div className="col-span-2">
           <FormField
-            control={form.control}
+            control={control}
             name="graduation"
             render={({ field }) => (
               <FormItem>
@@ -146,7 +154,7 @@ const OnboardStepOneForm: FC = () => {
         </div>
         <div className="col-span-2">
           <FormField
-            control={form.control}
+            control={control}
             name="major"
             render={({ field }) => (
               <FormItem>
@@ -165,7 +173,7 @@ const OnboardStepOneForm: FC = () => {
         </div>
         <div className="col-span-4">
           <FormField
-            control={form.control}
+            control={control}
             name="idea"
             render={({ field }) => (
               <FormItem>
@@ -178,7 +186,7 @@ const OnboardStepOneForm: FC = () => {
                   />
                 </FormControl>
                 <FormDescription>
-                  {form.watch("idea").length}/128 characters
+                  {watch("idea").length}/128 characters
                 </FormDescription>
                 <FormMessage />
               </FormItem>
