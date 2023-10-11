@@ -1,7 +1,7 @@
 import { type Session } from "next-auth";
 import { SessionProvider } from "next-auth/react";
 import { type AppType } from "next/app";
-import { Inter } from "next/font/google";
+import { Inter, Manrope } from "next/font/google";
 
 import { api } from "@/utils/api";
 
@@ -13,13 +13,18 @@ const inter = Inter({
   variable: "--font-inter",
 });
 
+const manrope = Manrope({
+  subsets: ["latin"],
+  variable: "--font-manrope",
+});
+
 const MyApp: AppType<{ session: Session | null }> = ({
   Component,
   pageProps: { session, ...pageProps },
 }) => {
   return (
     <SessionProvider session={session}>
-      <div className={cn(`${inter.variable} font-sans`)}>
+      <div className={cn(`${inter.variable} ${manrope.variable} font-sans`)}>
         <Component {...pageProps} />
       </div>
     </SessionProvider>

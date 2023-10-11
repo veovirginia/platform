@@ -56,7 +56,7 @@ const OnboardForm = () => {
   return (
     <div>
       <OnboardHeader />
-      <div className="rounded border border-muted p-6">
+      <div className="rounded">
         {step === 1 && <OnboardStepOne />}
         {step === 2 && <OnboardStepTwo />}
         <div className="col-span-4 flex w-full items-center justify-end gap-4 pt-4">

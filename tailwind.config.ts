@@ -76,6 +76,7 @@ export default {
       },
       fontFamily: {
         sans: ["var(--font-inter)"],
+        heading: ["var(--font-manrope)"],
       },
     },
   },

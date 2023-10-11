@@ -15,15 +15,7 @@ const Onboard: NextPage = () => {
   return (
     <DefaultLayout>
       <div className="flex w-full flex-1 justify-center pt-16">
-        <div className="w-full max-w-2xl">
-          <div className="pb-12">
-            <HeadingTwo className="text-center">Almost there!</HeadingTwo>
-            <div className="pt-2">
-              <Paragraph className="text-center leading-4 text-muted-foreground">
-                Complete the form to finalize your membership.
-              </Paragraph>
-            </div>
-          </div>
+        <div className="w-full max-w-2xl pt-12">
           <OnboardForm />
         </div>
       </div>
