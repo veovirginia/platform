@@ -47,7 +47,9 @@ const OnboardHeader: FC = () => {
             <div className={cn("relative h-1 w-full rounded-full bg-muted")}>
               <motion.div
                 className="absolute left-0 top-0 h-full w-full rounded-full bg-[#30E3CA]"
+                initial={{ width: 0 }}
                 animate={{ width: step > i ? "100%" : 0 }}
+                exit={{ width: 0 }}
               />
             </div>
           </div>
