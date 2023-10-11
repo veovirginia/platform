@@ -40,18 +40,23 @@ const formSchema = z.object({
     .min(4, "Must be at least 4 characters.")
     .max(128, "Can not exceed 32 characters.")
     .regex(/^[a-zA-Z- ]+$/, "Must be a valid major"),
-  idea: z.string().max(128, "Can not exceed 128 characters."),
+  idea: z.string().min(0).max(128, "Can not exceed 128 characters."),
 });
 
 const OnboardStepOneForm: FC = () => {
-  useHydrateAtoms([[validStepOneAtom, false]]);
-  useHydrateAtoms([[stepOneValuesAtom, null]]);
+  useHydrateAtoms([
+    [validStepOneAtom, false],
+    [
+      stepOneValuesAtom,
+      { name: "", phone: "", graduation: "", major: "", idea: "" },
+    ],
+  ]);
   const [_isFormValid, setFormValid] = useAtom(validStepOneAtom);
   const [formValues, setFormValues] = useAtom(stepOneValuesAtom);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: {
+    defaultValues: formValues ?? {
       name: "",
       phone: "",
       graduation: "",
@@ -61,16 +66,13 @@ const OnboardStepOneForm: FC = () => {
     mode: "onBlur",
   });
 
-  // const onSubmit = (values: z.infer<typeof formSchema>) => {
-  //   console.log(values); // Handle your form submission logic
-  // };
-
   useEffect(() => {
-    if (form.formState.isValid) {
-      setFormValid(true);
-      setFormValues({ ...form.getValues() });
-    } else setFormValid(false);
-  }, [form, form.formState.isValid, setFormValid, setFormValues]);
+    form.formState.isValid ? setFormValid(true) : setFormValid(false);
+  }, [form, form.formState.isValid, setFormValid]);
+
+  const updateFormValue = (field: string, value: string) => {
+    setFormValues((prev) => ({ ...prev, [field]: value }));
+  };
 
   useEffect(() => {
     if (formValues) {
@@ -78,14 +80,11 @@ const OnboardStepOneForm: FC = () => {
         form.setValue(key as keyof OnboardStepOneValues, value as string);
       });
     }
-  }, []);
+  }, [form, formValues]);
 
   return (
     <Form {...form}>
-      <form
-        className="grid grid-cols-4 gap-4 rounded border-muted"
-        // onSubmit={(event) => void form.handleSubmit(onSubmit)(event)}
-      >
+      <form className="grid grid-cols-4 gap-4 rounded border-muted">
         <div className="col-span-2">
           <FormField
             control={form.control}
@@ -94,7 +93,11 @@ const OnboardStepOneForm: FC = () => {
               <FormItem>
                 <FormLabel>Full Name</FormLabel>
                 <FormControl>
-                  <Input placeholder="John Doe" {...field} />
+                  <Input
+                    placeholder="John Doe"
+                    {...field}
+                    onBlur={() => updateFormValue(field.name, field.value)}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -109,7 +112,12 @@ const OnboardStepOneForm: FC = () => {
               <FormItem>
                 <FormLabel>Phone Number</FormLabel>
                 <FormControl>
-                  <PhoneInput {...field} />
+                  <PhoneInput
+                    {...field}
+                    onBlur={() => {
+                      updateFormValue(field.name, field.value);
+                    }}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -124,7 +132,12 @@ const OnboardStepOneForm: FC = () => {
               <FormItem>
                 <FormLabel>Expected Graduation</FormLabel>
                 <FormControl>
-                  <PatternInput format="##/##" placeholder="MM/YY" {...field} />
+                  <PatternInput
+                    format="##/##"
+                    placeholder="MM/YY"
+                    {...field}
+                    onBlur={() => updateFormValue(field.name, field.value)}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -139,7 +152,11 @@ const OnboardStepOneForm: FC = () => {
               <FormItem>
                 <FormLabel>Major</FormLabel>
                 <FormControl>
-                  <Input placeholder="Primary major" {...field} />
+                  <Input
+                    placeholder="Primary major"
+                    {...field}
+                    onBlur={() => updateFormValue(field.name, field.value)}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -154,7 +171,11 @@ const OnboardStepOneForm: FC = () => {
               <FormItem>
                 <FormLabel>Idea</FormLabel>
                 <FormControl>
-                  <Input placeholder="Optional" {...field} />
+                  <Input
+                    placeholder="Optional"
+                    {...field}
+                    onBlur={() => updateFormValue(field.name, field.value)}
+                  />
                 </FormControl>
                 <FormDescription>
                   {form.watch("idea").length}/128 characters
