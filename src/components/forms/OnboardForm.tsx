@@ -8,20 +8,30 @@ import {
 } from "../atoms/onboardFormAtom";
 import OnboardStepTwo from "./OnboardStepTwo";
 import OnboardHeader from "./OnboardHeader";
+import { api } from "@/utils/api";
+import { useEffect } from "react";
 
 const OnboardForm = () => {
   const [step, setStep] = useAtom(stepAtom);
   const [isFormValid] = useAtom(validStepOneAtom);
-  // const [formValues] = useAtom(stepOneValuesAtom);
+  const [formValues, setFormValues] = useAtom(stepOneValuesAtom);
+
+  const { mutateAsync: updateUser } = api.user.updateUser.useMutation();
+  const { data: user } = api.user.getOnboardUser.useQuery();
 
   const handlePrevious = () => {
     setStep((prev) => prev - 1);
   };
 
-  const handleNext = () => {
+  const handleNext = async () => {
     if (step === 1) {
       // save form values to db
-      // console.log(formValues);
+      console.log(formValues);
+      try {
+        await updateUser(formValues);
+      } catch (e) {
+        console.error(e);
+      }
     }
 
     setStep((prev) => prev + 1);
@@ -36,6 +46,10 @@ const OnboardForm = () => {
     if (!isFormValid) return true;
     return false;
   };
+
+  useEffect(() => {
+    user !== null && user !== undefined && setFormValues(user);
+  }, [setFormValues, user]);
 
   return (
     <div>
@@ -58,7 +72,8 @@ const OnboardForm = () => {
             <Button
               variant="default"
               disabled={disableNext()}
-              onClick={handleNext}
+              type="button"
+              onClick={() => void handleNext()}
             >
               {step < 2 ? "Continue" : "Schedule meeting"}
             </Button>
