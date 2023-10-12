@@ -11,6 +11,7 @@ import OnboardStepTwo from "./OnboardStepTwo";
 import OnboardHeader from "./OnboardHeader";
 import { api } from "@/utils/api";
 import { useEffect } from "react";
+import { cn } from "@/lib/utils";
 
 const OnboardForm = () => {
   const [step, setStep] = useAtom(stepAtom);
@@ -43,33 +44,29 @@ const OnboardForm = () => {
     setStep((prev) => prev + 1);
   };
 
-  const disablePrevious = () => {
-    if (step === 1) return true;
-    return false;
-  };
-
   const disableNext = () => {
     if (!isFormValid) return true;
     return false;
   };
 
   return (
-    <div className="rounded-lg bg-card p-6 shadow">
+    <div className="">
       <OnboardHeader />
-      <div className="">
+      <div className="mt-4 rounded-lg bg-card p-6 shadow">
         {step === 1 && <OnboardStepOne />}
         {step === 2 && <OnboardStepTwo />}
         <div className="col-span-4 flex w-full items-center justify-between pt-4">
           <div className="">
-            <Button
-              variant="secondary"
-              type="submit"
-              size="sm"
-              disabled={disablePrevious()}
-              onClick={handlePrevious}
-            >
-              Previous
-            </Button>
+            {step > 1 && (
+              <Button
+                variant="secondary"
+                type="submit"
+                size="sm"
+                onClick={handlePrevious}
+              >
+                Previous
+              </Button>
+            )}
           </div>
           <div className="">
             <Button
@@ -79,7 +76,7 @@ const OnboardForm = () => {
               disabled={disableNext()}
               onClick={() => void handleNext()}
             >
-              Continue
+              {step < 2 ? "Continue" : "Finish"}
             </Button>
           </div>
         </div>

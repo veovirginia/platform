@@ -49,7 +49,7 @@
     --primary: 212 100% 55%;
     --primary-foreground: 0 0% 98%;
 
-    --secondary: 0 0% 19%;
+    --secondary: 0 0% 17.5%;
     --secondary-foreground: 0 0% 98%;
     --secondary-border: 0 0% 28%;
 
@@ -62,10 +62,27 @@
     --destructive: 0 72% 40%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 0 0% 25%;
+    --border: 0 0% 20%;
     --input: 0 0% 16%;
     --ring: 212 100% 55%;
     --input-text: 0 0% 90%;
+    --tag: 0 0% 70%;
+
+    --major-computer-science-foreground: 187 55% 56%;
+    --major-computer-science-muted-foreground: 187 55% 28%;
+    --major-computer-science-background: 187 34% 23%;
+
+    --major-math-foreground: 235 80% 70%;
+    --major-math-muted-foreground: 235 50% 40%;
+    --major-math-background: 235 34% 23%;
+
+    --major-statistics-foreground: 125787 55% 56%;
+    --major-statistics-muted-foreground: 257 55% 28%;
+    --major-statistics-background: 257 34% 23%;
+
+    --major-english-foreground: 285 55% 56%;
+    --major-english-muted-foreground: 285 55% 28%;
+    --major-english-background: 285 34% 23%;
 
     --paragraph: 0 0% 56%;
 

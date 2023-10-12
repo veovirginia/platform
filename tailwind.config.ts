@@ -25,6 +25,27 @@ export default {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         paragraph: "hsl(var(--paragraph))",
+        tag: "hsl(var(--tag))",
+        "computer-science": {
+          DEFAULT: "hsl(var(--major-computer-science-foreground))",
+          muted: "hsl(var(--major-computer-science-muted-foreground))",
+          background: "hsl(var(--major-computer-science-background))",
+        },
+        math: {
+          DEFAULT: "hsl(var(--major-math-foreground))",
+          muted: "hsl(var(--major-math-muted-foreground))",
+          background: "hsl(var(--major-math-background))",
+        },
+        junior: {
+          DEFAULT: "hsl(var(--class-junior-foreground))",
+          muted: "hsl(var(--class-junior-muted-foreground))",
+          background: "hsl(var(--class-junior-background))",
+        },
+        senior: {
+          DEFAULT: "hsl(var(--class-senior-foreground))",
+          muted: "hsl(var(--class-senior-muted-foreground))",
+          background: "hsl(var(--class-senior-background))",
+        },
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",
