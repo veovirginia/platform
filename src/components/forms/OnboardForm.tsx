@@ -54,7 +54,7 @@ const OnboardForm = () => {
   };
 
   return (
-    <div className="rounded-lg bg-card p-6">
+    <div className="rounded-lg bg-card p-6 shadow">
       <OnboardHeader />
       <div className="">
         {step === 1 && <OnboardStepOne />}
