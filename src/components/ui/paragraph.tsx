@@ -11,9 +11,7 @@ const Paragraph: FC<ParagraphProps> = ({
   children,
 }: ParagraphProps) => {
   return (
-    <p className={cn("leading-7 [&:not(:first-child)]:mt-6", className)}>
-      {children}
-    </p>
+    <p className={cn("text-paragraph leading-7", className)}>{children}</p>
   );
 };
 

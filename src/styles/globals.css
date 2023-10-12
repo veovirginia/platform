@@ -37,20 +37,21 @@
  
   .dark { */
   :root {
-    --background: 240 12% 5%;
+    --background: 0 0% 9%;
     --foreground: 0 0% 98%;
 
-    --card: 0 0% 3.9%;
+    --card: 0 0% 13%;
     --card-foreground: 0 0% 98%;
 
     --popover: 0 0% 3.9%;
     --popover-foreground: 0 0% 98%;
 
-    --primary: 0 0% 98%;
-    --primary-foreground: 0 0% 9%;
+    --primary: 212 100% 55%;
+    --primary-foreground: 0 0% 98%;
 
-    --secondary: 0 0% 14.9%;
+    --secondary: 0 0% 20%;
     --secondary-foreground: 0 0% 98%;
+    --secondary-border: 0 0% 26%;
 
     --muted: 0 0% 14.9%;
     --muted-foreground: 0 0% 63.9%;
@@ -61,9 +62,12 @@
     --destructive: 0 72% 40%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 0 0% 14.9%;
-    --input: 0 0% 14.9%;
-    --ring: 0 0% 83.1%;
+    --border: 0 0% 25%;
+    --input: 0 0% 16%;
+    --ring: 212 100% 55%;
+    --input-text: 0 0% 90%;
+
+    --paragraph: 0 0% 65%;
 
     --radius: 0.5rem;
   }
