@@ -21,6 +21,10 @@ const OnboardForm = () => {
   const { mutateAsync: updateUser } = api.user.updateUser.useMutation();
   const { data: user } = api.user.getOnboardUser.useQuery();
 
+  useEffect(() => {
+    user !== null && user !== undefined && setFormValues(user);
+  }, [setFormValues, user]);
+
   const handlePrevious = () => {
     setStep((prev) => prev - 1);
   };
@@ -49,21 +53,18 @@ const OnboardForm = () => {
     return false;
   };
 
-  useEffect(() => {
-    user !== null && user !== undefined && setFormValues(user);
-  }, [setFormValues, user]);
-
   return (
-    <div>
+    <div className="rounded-lg bg-card p-6">
       <OnboardHeader />
-      <div className="rounded">
+      <div className="">
         {step === 1 && <OnboardStepOne />}
         {step === 2 && <OnboardStepTwo />}
-        <div className="col-span-4 flex w-full items-center justify-end gap-4 pt-4">
+        <div className="col-span-4 flex w-full items-center justify-between pt-4">
           <div className="">
             <Button
-              variant="ghost"
+              variant="secondary"
               type="submit"
+              size="sm"
               disabled={disablePrevious()}
               onClick={handlePrevious}
             >
@@ -73,11 +74,12 @@ const OnboardForm = () => {
           <div className="">
             <Button
               variant="default"
-              disabled={disableNext()}
+              size="sm"
               type="button"
+              disabled={disableNext()}
               onClick={() => void handleNext()}
             >
-              {step < 2 ? "Continue" : "Schedule meeting"}
+              Continue
             </Button>
           </div>
         </div>

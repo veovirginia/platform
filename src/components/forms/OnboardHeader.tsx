@@ -4,28 +4,25 @@ import { stepAtom } from "../atoms/onboardFormAtom";
 import { useAtom } from "jotai";
 import { motion } from "framer-motion";
 import HeadingTwo from "../ui/headingTwo";
+import Paragraph from "../ui/paragraph";
 
 interface OnboardStep {
   text: string;
-  color: string;
+  description: string;
 }
 
 const ONBOARD_STEPS: OnboardStep[] = [
   {
     text: "Tell us about yourself",
-    color: "#687EFF",
-  },
-  {
-    text: "Choose a member to meet with",
-    color: "blue-500",
+    description: "Help us get to know you better.",
   },
   {
     text: "Schedule a coffee chat",
-    color: "indigo-500",
+    description: "Meet with a member to get onboarded.",
   },
   {
-    text: "Await verification",
-    color: "purple-500",
+    text: "You're done!",
+    description: "Sit back and relax as you wait for your chat.",
   },
 ];
 
@@ -33,14 +30,16 @@ const OnboardHeader: FC = () => {
   const [step] = useAtom(stepAtom);
   return (
     <div>
-      <div className="grid grid-cols-4 gap-2 pb-6 text-sm text-muted-foreground">
-        {ONBOARD_STEPS.map((item, i) => {
+      <div className="grid grid-cols-2 gap-2 pb-6 text-sm text-muted-foreground">
+        {ONBOARD_STEPS.slice(0, 2).map((item, i) => {
           i += 1;
           return (
             <div key={i}>
-              <div className={cn("relative h-1 w-full rounded-full bg-muted")}>
+              <div
+                className={cn("relative h-1 w-full rounded-full bg-background")}
+              >
                 <motion.div
-                  className={`absolute left-0 top-0 h-full w-full rounded-full bg-[#30E3CA]`}
+                  className={`absolute left-0 top-0 h-full w-full rounded-full bg-ring`}
                   initial={{ width: 0 }}
                   animate={{ width: step > i ? "100%" : 0 }}
                   exit={{ width: 0 }}
@@ -50,12 +49,15 @@ const OnboardHeader: FC = () => {
           );
         })}
       </div>
-      <p className="pb-2 font-mono text-sm font-medium tracking-wide text-[#30E3CA]">
-        {step - 1}/{ONBOARD_STEPS.length}
+      <p className="pb-2 text-sm font-medium tracking-wide text-muted-foreground">
+        {step - 1}/{ONBOARD_STEPS.length - 1}
       </p>
-      <HeadingTwo className="font-heading pb-8 font-bold">
+      <HeadingTwo className="mb-0 scroll-m-0 pb-0 font-heading font-bold">
         {ONBOARD_STEPS[step - 1]?.text}
       </HeadingTwo>
+      <Paragraph className="pb-6 pt-2">
+        {ONBOARD_STEPS[step - 1]?.description}
+      </Paragraph>
     </div>
   );
 };

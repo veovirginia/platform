@@ -102,7 +102,7 @@ const OnboardStepOneForm: FC = () => {
 
   return (
     <Form {...form}>
-      <form className="grid grid-cols-4 gap-4 rounded border-muted">
+      <form className="grid grid-cols-4 gap-4">
         <div className="col-span-2">
           <FormField
             control={control}
