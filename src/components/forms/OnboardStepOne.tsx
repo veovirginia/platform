@@ -21,6 +21,7 @@ import {
 import { useAtom } from "jotai";
 import { useHydrateAtoms } from "jotai/utils";
 import { type OnboardStepOneValues } from "@/lib/types";
+import { motion } from "framer-motion";
 
 const formSchema = z.object({
   name: z
@@ -56,6 +57,7 @@ const OnboardStepOneForm: FC = () => {
       { name: "", phone: "", graduation: "", major: "", idea: "" },
     ],
   ]);
+
   const [_isFormValid, setFormValid] = useAtom(validStepOneAtom);
   const [_updateOnboard, setUpdateOnboard] = useAtom(updateOnboardAtom);
   const [formValues, setFormValues] = useAtom(stepOneValuesAtom);
@@ -100,111 +102,131 @@ const OnboardStepOneForm: FC = () => {
     if (isDirty) setUpdateOnboard(true);
   }, [isDirty, setUpdateOnboard]);
 
+  const container = {
+    hidden: {
+      opacity: 0,
+      y: 10,
+    },
+    show: {
+      opacity: 1,
+      y: 0,
+    },
+  };
+
   return (
-    <Form {...form}>
-      <form className="grid grid-cols-4 gap-4">
-        <div className="col-span-2">
-          <FormField
-            control={control}
-            name="name"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Full Name</FormLabel>
-                <FormControl>
-                  <Input
-                    placeholder="John Doe"
-                    {...field}
-                    onBlur={() => updateFormValue(field.name, field.value)}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        </div>
-        <div className="col-span-2">
-          <FormField
-            control={control}
-            name="phone"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Phone Number</FormLabel>
-                <FormControl>
-                  <PhoneInput
-                    {...field}
-                    onBlur={() => {
-                      updateFormValue(field.name, field.value);
-                    }}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        </div>
-        <div className="col-span-2">
-          <FormField
-            control={control}
-            name="graduation"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Expected Graduation</FormLabel>
-                <FormControl>
-                  <PatternInput
-                    format="##/##"
-                    placeholder="MM/YY"
-                    {...field}
-                    onBlur={() => updateFormValue(field.name, field.value)}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        </div>
-        <div className="col-span-2">
-          <FormField
-            control={control}
-            name="major"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Major</FormLabel>
-                <FormControl>
-                  <Input
-                    placeholder="Primary major"
-                    {...field}
-                    onBlur={() => updateFormValue(field.name, field.value)}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        </div>
-        <div className="col-span-4">
-          <FormField
-            control={control}
-            name="idea"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Idea</FormLabel>
-                <FormControl>
-                  <Input
-                    placeholder="Optional"
-                    {...field}
-                    onBlur={() => updateFormValue(field.name, field.value)}
-                  />
-                </FormControl>
-                <FormDescription>
-                  {watch("idea").length}/128 characters
-                </FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        </div>
-      </form>
-    </Form>
+    <motion.div
+      variants={container}
+      initial="hidden"
+      animate="show"
+      exit="hidden"
+      transition={{ duration: 0.22, delay: 0.04 }}
+      className="p-2"
+    >
+      <Form {...form}>
+        <form className="grid grid-cols-4 gap-4">
+          <div className="col-span-2">
+            <FormField
+              control={control}
+              name="name"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Full Name</FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder="John Doe"
+                      {...field}
+                      onBlur={() => updateFormValue(field.name, field.value)}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
+          <div className="col-span-2">
+            <FormField
+              control={control}
+              name="phone"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Phone Number</FormLabel>
+                  <FormControl>
+                    <PhoneInput
+                      {...field}
+                      onBlur={() => {
+                        updateFormValue(field.name, field.value);
+                      }}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
+          <div className="col-span-2">
+            <FormField
+              control={control}
+              name="graduation"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Expected Graduation</FormLabel>
+                  <FormControl>
+                    <PatternInput
+                      format="##/##"
+                      placeholder="MM/YY"
+                      {...field}
+                      onBlur={() => updateFormValue(field.name, field.value)}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
+          <div className="col-span-2">
+            <FormField
+              control={control}
+              name="major"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Major</FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder="Primary major"
+                      {...field}
+                      onBlur={() => updateFormValue(field.name, field.value)}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
+          <div className="col-span-4">
+            <FormField
+              control={control}
+              name="idea"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Idea</FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder="Optional"
+                      {...field}
+                      onBlur={() => updateFormValue(field.name, field.value)}
+                    />
+                  </FormControl>
+                  <FormDescription>
+                    {watch("idea").length}/128 characters
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
+        </form>
+      </Form>
+    </motion.div>
   );
 };
 

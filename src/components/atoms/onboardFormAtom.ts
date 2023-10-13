@@ -14,3 +14,5 @@ export const stepOneValuesAtom = atom<OnboardStepOneValues>({
   major: "",
   idea: "",
 });
+
+export const calMeetingAtom = atom<string>("");

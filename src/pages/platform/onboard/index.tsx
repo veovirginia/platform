@@ -1,7 +1,4 @@
 import DefaultLayout from "@/components/layouts/DefaultLayout";
-import { Button } from "@/components/ui/button";
-import HeadingTwo from "@/components/ui/headingTwo";
-import Paragraph from "@/components/ui/paragraph";
 import { cn } from "@/lib/utils";
 import { type NextPage, type GetServerSidePropsContext } from "next";
 import { getSession } from "next-auth/react";
