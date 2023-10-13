@@ -7,11 +7,14 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 const COLORS: Record<string, string> = {
-  "computer-science": `text-computer-science bg-computer-science-background border-computer-science-muted`,
-  math: `text-math bg-math-background border-math-muted`,
+  "computer-science": `text-computer-science bg-computer-science-background`,
+  math: `text-math bg-math-background`,
+  statistics: "text-statistics bg-statistics-background",
+  english: "text-english bg-english-background",
+  commerce: "text-commerce bg-commerce-background",
+  economics: "text-economics bg-economics-background",
 };
 
 export function getMajorClassname(major: string) {
-  const formattedMajor = dash(major.toLowerCase());
-  return COLORS[formattedMajor];
+  return COLORS[dash(major.toLowerCase())];
 }

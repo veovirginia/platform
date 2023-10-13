@@ -22,6 +22,7 @@ export default {
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
         "input-text": "hsl(var(--input-text))",
+        "input-placeholder": "hsl(var(--input-placeholder))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         paragraph: "hsl(var(--paragraph))",
@@ -33,18 +34,23 @@ export default {
         },
         math: {
           DEFAULT: "hsl(var(--major-math-foreground))",
-          muted: "hsl(var(--major-math-muted-foreground))",
           background: "hsl(var(--major-math-background))",
         },
-        junior: {
-          DEFAULT: "hsl(var(--class-junior-foreground))",
-          muted: "hsl(var(--class-junior-muted-foreground))",
-          background: "hsl(var(--class-junior-background))",
+        statistics: {
+          DEFAULT: "hsl(var(--major-statistics-foreground))",
+          background: "hsl(var(--major-statistics-background))",
         },
-        senior: {
-          DEFAULT: "hsl(var(--class-senior-foreground))",
-          muted: "hsl(var(--class-senior-muted-foreground))",
-          background: "hsl(var(--class-senior-background))",
+        english: {
+          DEFAULT: "hsl(var(--major-english-foreground))",
+          background: "hsl(var(--major-english-background))",
+        },
+        commerce: {
+          DEFAULT: "hsl(var(--major-commerce-foreground))",
+          background: "hsl(var(--major-commerce-background))",
+        },
+        economics: {
+          DEFAULT: "hsl(var(--major-economics-foreground))",
+          background: "hsl(var(--major-economics-background))",
         },
         primary: {
           DEFAULT: "hsl(var(--primary))",

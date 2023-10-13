@@ -66,23 +66,26 @@
     --input: 0 0% 16%;
     --ring: 212 100% 55%;
     --input-text: 0 0% 90%;
+    --input-placeholder: 0 0% 45%;
     --tag: 0 0% 70%;
 
-    --major-computer-science-foreground: 187 55% 56%;
-    --major-computer-science-muted-foreground: 187 55% 28%;
-    --major-computer-science-background: 187 34% 23%;
+    --major-computer-science-foreground: 187 55% 62%;
+    --major-computer-science-background: 187 34% 19%;
 
-    --major-math-foreground: 235 80% 70%;
-    --major-math-muted-foreground: 235 50% 40%;
+    --major-math-foreground: 235 95% 75%;
     --major-math-background: 235 34% 23%;
 
-    --major-statistics-foreground: 125787 55% 56%;
-    --major-statistics-muted-foreground: 257 55% 28%;
-    --major-statistics-background: 257 34% 23%;
+    --major-statistics-foreground: 326 80% 70%;
+    --major-statistics-background: 257 34% 26%;
 
-    --major-english-foreground: 285 55% 56%;
-    --major-english-muted-foreground: 285 55% 28%;
-    --major-english-background: 285 34% 23%;
+    --major-english-foreground: 113 65% 64%;
+    --major-english-background: 113 43% 14%;
+
+    --major-commerce-foreground: 34 97% 50%;
+    --major-commerce-background: 34 84% 16%;
+
+    --major-economics-foreground: 47 87% 70%;
+    --major-economics-background: 47 74.5% 16%;
 
     --paragraph: 0 0% 56%;
 
