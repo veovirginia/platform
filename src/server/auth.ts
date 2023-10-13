@@ -29,6 +29,7 @@ declare module "next-auth" {
       name: string;
       image: string;
       onboarded: boolean;
+      verified: boolean;
     };
   }
 
@@ -38,6 +39,7 @@ declare module "next-auth" {
     name: string;
     image: string;
     onboarded: boolean;
+    verified: boolean;
   }
 }
 

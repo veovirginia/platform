@@ -1,5 +1,5 @@
 import { useEffect, useMemo } from "react";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/clientUtils";
 import { motion } from "framer-motion";
 import { getCalApi } from "@calcom/embed-react";
 import { useHydrateAtoms } from "jotai/utils";
@@ -7,6 +7,8 @@ import { calMeetingAtom } from "../atoms/onboardFormAtom";
 import { shuffle } from "radash";
 import * as ScrollArea from "@radix-ui/react-scroll-area";
 import CalItem from "../dashboard/CalItem";
+import { useRouter } from "next/router";
+import { api } from "@/utils/api";
 
 const MEMBERS = [
   {
@@ -77,6 +79,9 @@ const MEMBERS = [
 
 const OnboardStepTwo = () => {
   useHydrateAtoms([[calMeetingAtom, ""]]);
+  const router = useRouter();
+
+  const { mutateAsync: updateUser } = api.user.updateUser.useMutation();
 
   const container = {
     hidden: {
@@ -97,8 +102,20 @@ const OnboardStepTwo = () => {
         hideEventTypeDetails: false,
         layout: "month_view",
       });
+      cal("on", {
+        action: "bookingSuccessful",
+        callback: (error) => {
+          void (async () => {
+            const { data } = error.detail;
+            console.log(data);
+
+            await updateUser({ onboarded: true });
+            void router.push("/platform/onboard/pending");
+          })();
+        },
+      });
     })();
-  }, []);
+  }, [router, updateUser]);
 
   const shuffledMembers = useMemo(() => shuffle(MEMBERS), []);
 

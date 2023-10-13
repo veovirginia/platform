@@ -1,4 +1,4 @@
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/clientUtils";
 import { type FC } from "react";
 import { stepAtom } from "../atoms/onboardFormAtom";
 import { useAtom } from "jotai";
