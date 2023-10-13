@@ -52,10 +52,6 @@ const OnboardStepOneForm: FC = () => {
   useHydrateAtoms([
     [validStepOneAtom, false],
     [updateOnboardAtom, false],
-    [
-      stepOneValuesAtom,
-      { name: "", phone: "", graduation: "", major: "", idea: "" },
-    ],
   ]);
 
   const [_isFormValid, setFormValid] = useAtom(validStepOneAtom);
@@ -64,7 +60,7 @@ const OnboardStepOneForm: FC = () => {
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: {
+    defaultValues: formValues ?? {
       name: "",
       phone: "",
       graduation: "",
@@ -100,6 +96,7 @@ const OnboardStepOneForm: FC = () => {
 
   useEffect(() => {
     if (isDirty) setUpdateOnboard(true);
+    else setUpdateOnboard(false);
   }, [isDirty, setUpdateOnboard]);
 
   const container = {
@@ -122,6 +119,7 @@ const OnboardStepOneForm: FC = () => {
       transition={{ duration: 0.22, delay: 0.04 }}
       className="p-2"
     >
+      {isDirty.toString()}
       <Form {...form}>
         <form className="grid grid-cols-4 gap-4">
           <div className="col-span-2">

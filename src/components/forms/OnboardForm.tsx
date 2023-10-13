@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useAtom } from "jotai";
 import {
   calMeetingAtom,
@@ -23,24 +23,19 @@ const OnboardForm = () => {
   const [step, setStep] = useAtom(stepAtom);
   const [isFormValid] = useAtom(validStepOneAtom);
   const [updateOnboard] = useAtom(updateOnboardAtom);
-  const [formValues, setFormValues] = useAtom(stepOneValuesAtom);
+  const [formValues] = useAtom(stepOneValuesAtom);
   const [calMeetingId] = useAtom(calMeetingAtom);
 
   const { mutateAsync: updateUser } = api.user.updateUser.useMutation();
-  const { data: user } = api.user.getOnboardUser.useQuery();
-
-  useEffect(() => {
-    user && setFormValues(user);
-  }, [setFormValues, user]);
 
   const CurrentStep = ONBOARD_STEPS[step - 1]?.component ?? null;
 
   const handlePrevious = () => setStep((prev) => prev - 1);
 
   const handleNext = async () => {
-    if (step === 1) {
+    if (step === 1 && updateOnboard) {
       try {
-        updateOnboard && (await updateUser(formValues));
+        await updateUser(formValues);
       } catch (e) {
         console.error(e);
       }
