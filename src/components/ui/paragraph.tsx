@@ -1,4 +1,4 @@
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/clientUtils";
 import { type FC, type ReactNode } from "react";
 
 interface ParagraphProps {
@@ -11,7 +11,7 @@ const Paragraph: FC<ParagraphProps> = ({
   children,
 }: ParagraphProps) => {
   return (
-    <p className={cn("text-paragraph leading-7", className)}>{children}</p>
+    <p className={cn("leading-7 text-paragraph", className)}>{children}</p>
   );
 };
 

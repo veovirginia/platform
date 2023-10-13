@@ -6,7 +6,7 @@ import {
   PatternFormat,
   type PatternFormatProps,
 } from "react-number-format";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/clientUtils";
 
 export type InputProps = React.InputHTMLAttributes<HTMLInputElement>;
 
@@ -15,7 +15,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
     return (
       <input
         className={cn(
-          "placeholder:text-input-placeholder flex h-10 w-full rounded-lg border border-border bg-background px-3 py-2 text-sm text-input-text shadow-[inset_0px_0.0625rem_0_rgba(255,255,255,0.085)] shadow-sm outline-none ring-offset-background transition-all duration-150 file:border-0 file:bg-transparent file:text-sm file:font-medium focus:border-ring focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-ring/20 disabled:cursor-not-allowed disabled:opacity-50",
+          "flex h-10 w-full rounded-lg border border-border bg-background px-3 py-2 text-sm text-input-text shadow-[inset_0px_0.0625rem_0_rgba(255,255,255,0.085)] shadow-sm outline-none ring-offset-background transition-all duration-150 file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-input-placeholder focus:border-ring focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-ring/20 disabled:cursor-not-allowed disabled:opacity-50",
           className,
         )}
         ref={ref}
@@ -36,7 +36,7 @@ const PhoneInput = React.forwardRef<HTMLInputElement, PhoneInputProps>(
       <>
         <PhoneNumberInput
           className={cn(
-            "placeholder:text-input-placeholder flex h-10 w-full rounded-lg border border-border bg-background px-3 py-2 text-sm text-input-text shadow-[inset_0px_0.0625rem_0_rgba(255,255,255,0.085)] shadow-sm outline-none ring-offset-background transition-all duration-150 file:border-0 file:bg-transparent file:text-sm file:font-medium focus:border-ring focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-ring/20 disabled:cursor-not-allowed disabled:opacity-50",
+            "flex h-10 w-full rounded-lg border border-border bg-background px-3 py-2 text-sm text-input-text shadow-[inset_0px_0.0625rem_0_rgba(255,255,255,0.085)] shadow-sm outline-none ring-offset-background transition-all duration-150 file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-input-placeholder focus:border-ring focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-ring/20 disabled:cursor-not-allowed disabled:opacity-50",
             className,
           )}
           ref={ref}
@@ -61,7 +61,7 @@ const PatternInput = React.forwardRef<HTMLInputElement, PatternInputProps>(
     return (
       <PatternFormat
         className={cn(
-          "placeholder:text-input-placeholder flex h-10 w-full rounded-lg border border-border bg-background px-3 py-2 text-sm text-input-text shadow-[inset_0px_0.0625rem_0_rgba(255,255,255,0.085)] shadow-sm outline-none ring-offset-background transition-all duration-150 file:border-0 file:bg-transparent file:text-sm file:font-medium focus:border-ring focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-ring/20 disabled:cursor-not-allowed disabled:opacity-50",
+          "flex h-10 w-full rounded-lg border border-border bg-background px-3 py-2 text-sm text-input-text shadow-[inset_0px_0.0625rem_0_rgba(255,255,255,0.085)] shadow-sm outline-none ring-offset-background transition-all duration-150 file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-input-placeholder focus:border-ring focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-ring/20 disabled:cursor-not-allowed disabled:opacity-50",
           className,
         )}
         {...props}

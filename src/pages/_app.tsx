@@ -6,7 +6,7 @@ import { Inter, Manrope } from "next/font/google";
 import { api } from "@/utils/api";
 
 import "@/styles/globals.css";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/clientUtils";
 
 const inter = Inter({
   subsets: ["latin"],

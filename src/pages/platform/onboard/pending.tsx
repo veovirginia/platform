@@ -1,7 +1,7 @@
 import DefaultLayout from "@/components/layouts/DefaultLayout";
 import HeadingTwo from "@/components/ui/headingTwo";
 import Paragraph from "@/components/ui/paragraph";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/clientUtils";
 import { type NextPage, type GetServerSidePropsContext } from "next";
 import { getSession } from "next-auth/react";
 import { stepAtom } from "@/components/atoms/onboardFormAtom";
