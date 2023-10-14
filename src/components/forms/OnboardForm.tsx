@@ -20,7 +20,7 @@ const ONBOARD_STEPS = [
 ];
 
 const OnboardForm = () => {
-  const [step, setStep] = useAtom(stepAtom);
+  const [[step], setStep] = useAtom(stepAtom);
   const [isFormValid] = useAtom(validStepOneAtom);
   const [updateOnboard] = useAtom(updateOnboardAtom);
   const [formValues] = useAtom(stepOneValuesAtom);
@@ -30,7 +30,9 @@ const OnboardForm = () => {
 
   const CurrentStep = ONBOARD_STEPS[step - 1]?.component ?? null;
 
-  const handlePrevious = () => setStep((prev) => prev - 1);
+  const stepHandler = (direction: number) => {
+    setStep(([prev]) => [prev + direction, direction]);
+  };
 
   const handleNext = async () => {
     if (step === 1 && updateOnboard) {
@@ -40,7 +42,7 @@ const OnboardForm = () => {
         console.error(e);
       }
     }
-    if (step !== ONBOARD_STEPS.length) setStep((prev) => prev + 1);
+    if (step !== ONBOARD_STEPS.length) stepHandler(1);
   };
 
   const CalButton = () => (
@@ -72,7 +74,7 @@ const OnboardForm = () => {
                 variant="secondary"
                 type="submit"
                 size="sm"
-                onClick={handlePrevious}
+                onClick={() => stepHandler(-1)}
               >
                 Previous
               </Button>

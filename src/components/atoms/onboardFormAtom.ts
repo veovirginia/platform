@@ -1,7 +1,7 @@
 import { type OnboardStepOneValues } from "@/lib/types";
 import { atom } from "jotai";
 
-export const stepAtom = atom<number>(1);
+export const stepAtom = atom<[number, number]>([1, 0]);
 
 export const validStepOneAtom = atom<boolean>(false);
 

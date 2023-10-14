@@ -116,10 +116,9 @@ const OnboardStepOneForm: FC = () => {
       initial="hidden"
       animate="show"
       exit="hidden"
-      transition={{ duration: 0.22, delay: 0.04 }}
+      transition={{ duration: 0.25, delay: 0.45 }}
       className="p-2"
     >
-      {isDirty.toString()}
       <Form {...form}>
         <form className="grid grid-cols-4 gap-4">
           <div className="col-span-2">

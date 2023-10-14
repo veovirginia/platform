@@ -107,7 +107,6 @@ const OnboardStepTwo = () => {
         callback: (error) => {
           void (async () => {
             const { data } = error.detail;
-            console.log(data);
 
             await updateUser({ onboarded: true });
             void router.push("/platform/onboard/pending");
@@ -125,7 +124,7 @@ const OnboardStepTwo = () => {
       initial="hidden"
       animate="show"
       exit="hidden"
-      transition={{ duration: 0.22, delay: 0.04 }}
+      transition={{ duration: 0.25, delay: 0.45 }}
     >
       <div className="w-full">
         <ScrollArea.Root className="h-[20rem] rounded">

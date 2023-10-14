@@ -20,7 +20,7 @@ const Onboard: NextPage<
   const { data: user } = api.user.getOnboardUser.useQuery();
 
   useHydrateAtoms([
-    [stepAtom, 1],
+    [stepAtom, [1, 0]],
     [
       stepOneValuesAtom,
       user ?? { name: "", phone: "", graduation: "", major: "", idea: "" },
