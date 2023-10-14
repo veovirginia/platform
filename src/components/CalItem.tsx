@@ -1,9 +1,9 @@
 import { useAtom } from "jotai";
-import { calMeetingAtom } from "../atoms/onboardFormAtom";
+import { calMeetingAtom } from "./atoms/onboardFormAtom";
 import { type FC } from "react";
 import { cn, getMajorClassname } from "@/lib/clientUtils";
 import { AnimatePresence, motion } from "framer-motion";
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 
 interface CalItemProps {
   name: string;

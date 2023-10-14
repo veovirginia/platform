@@ -6,7 +6,7 @@ import { useHydrateAtoms } from "jotai/utils";
 import { calMeetingAtom } from "../atoms/onboardFormAtom";
 import { shuffle } from "radash";
 import * as ScrollArea from "@radix-ui/react-scroll-area";
-import CalItem from "../dashboard/CalItem";
+import CalItem from "../CalItem";
 import { useRouter } from "next/router";
 import { api } from "@/utils/api";
 
