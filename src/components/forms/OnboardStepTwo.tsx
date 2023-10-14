@@ -64,15 +64,15 @@ const MEMBERS = [
     majors: ["English"],
     graduation: "2026",
     picture:
-      "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/avatars/45/45034c9c01c6178c96a5c6fc047f5ef659fc2a60.jpg",
+      "https://res.cloudinary.com/dblodzwva/image/upload/v1697317153/maya_photo.png",
     calId: "mayagearinvirga/veo-onboard-meeting",
   },
   {
     name: "Drew Zhou",
-    majors: ["English"],
+    majors: ["Economics"],
     graduation: "2026",
     picture:
-      "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/avatars/45/45034c9c01c6178c96a5c6fc047f5ef659fc2a60.jpg",
+      "https://res.cloudinary.com/dblodzwva/image/upload/v1697317204/andrew_photo.png",
     calId: "drewz/veo-onboard-meeting",
   },
   {
