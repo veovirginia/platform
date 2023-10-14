@@ -1,4 +1,4 @@
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/clientUtils";
 import { type FC, type ReactNode } from "react";
 
 interface HeadingThreeProps {

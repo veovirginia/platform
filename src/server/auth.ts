@@ -26,30 +26,20 @@ declare module "next-auth" {
     user: DefaultSession["user"] & {
       id: string;
       email: string;
-      emailVerified: Date | null;
-      onboarded: string;
       name: string;
-      bio: string;
       image: string;
-      phone: string;
-      graduation: string;
-      major: string;
-      idea: string;
+      onboarded: boolean;
+      verified: boolean;
     };
   }
 
   interface User {
     id: string;
     email: string;
-    emailVerified: Date | null;
-    onboarded: string;
     name: string;
-    bio: string;
     image: string;
-    phone: string;
-    graduation: string;
-    major: string;
-    idea: string;
+    onboarded: boolean;
+    verified: boolean;
   }
 }
 

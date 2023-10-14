@@ -1,6 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signIn } from "next-auth/react";
-import { useState, type FC } from "react";
+import { useState, type FC, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Button } from "../ui/button";
@@ -17,7 +17,7 @@ import {
 import HeadingThree from "../ui/headingThree";
 import Paragraph from "../ui/paragraph";
 import { env } from "@/env.mjs";
-import { XCircle } from "lucide-react";
+import { XCircle, CheckCircle2 } from "lucide-react";
 import { Alert, AlertTitle, AlertDescription } from "../ui/alert";
 
 const EMAIL_REGEX = /^[A-Za-z0-9._%+-]+@virginia\.edu$/i;
@@ -37,7 +37,7 @@ const SigninAlert: FC<SigninAlertProps> = ({
     if (success) {
       return (
         <Alert variant="successful" minimize setClosed={() => setClosed()}>
-          <XCircle className="h-4 w-4" />
+          <CheckCircle2 className="h-4 w-4" />
           <AlertTitle>Success</AlertTitle>
           <AlertDescription>
             Check your inbox for an email containing a link to sign in.
@@ -79,7 +79,12 @@ const SigninForm: FC = () => {
     },
   });
 
+  const { formState, control, handleSubmit, getValues, reset } = form;
+  const { isSubmitted, isSubmitting, isValid, isDirty } = formState;
+
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    setSuccess(true);
+    setOpen(true);
     const response = await signIn("email", {
       email: values.email,
       redirect: false,
@@ -93,11 +98,15 @@ const SigninForm: FC = () => {
     setOpen(true);
   };
 
+  useEffect(() => {
+    if (isSubmitted) reset(getValues(), { keepDirtyValues: true });
+  }, [isSubmitted]);
+
   return (
     <div className="w-full max-w-md">
       <Form {...form}>
         <HeadingThree className="pb-1">Sign in to VEO</HeadingThree>
-        <div className="pb-4">
+        <div className="pb-2">
           <Paragraph className="text-muted-foreground">
             Join the community of builders at the University of Virginia.
           </Paragraph>
@@ -111,17 +120,17 @@ const SigninForm: FC = () => {
           }}
         />
         <form
-          onSubmit={(event) => void form.handleSubmit(onSubmit)(event)}
-          className="pt-4"
+          onSubmit={(event) => void handleSubmit(onSubmit)(event)}
+          className="pt-2"
         >
           <FormField
-            control={form.control}
+            control={control}
             name="email"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Email</FormLabel>
                 <FormControl>
-                  <Input placeholder="johndoe@virginia.edu" {...field} />
+                  <Input placeholder="computingId@virginia.edu" {...field} />
                 </FormControl>
                 <FormDescription>
                   Your UVA student email address.
@@ -131,7 +140,12 @@ const SigninForm: FC = () => {
             )}
           />
           <div className="pt-4">
-            <Button variant="default" type="submit" className="w-full">
+            <Button
+              variant="default"
+              type="submit"
+              disabled={isSubmitting || !isValid || !isDirty}
+              className="w-full"
+            >
               Continue
             </Button>
           </div>
