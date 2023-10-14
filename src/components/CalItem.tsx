@@ -66,10 +66,10 @@ const CalItem: FC<CalItemProps> = ({
           </AvatarFallback>
         </Avatar>
         <div className="text-sm">
-          <p className="flex items-baseline space-x-2 font-medium">
-            <span>{name}</span>
-            <span className="font-normal text-muted-foreground">
-              Class of {graduation}
+          <p className="flex items-baseline space-x-1 font-medium">
+            <span className="flex-shrink-0">{name}</span>
+            <span className="flex-shrink-0 font-normal text-muted-foreground">
+              {graduation}
             </span>
           </p>
           <div className="flex flex-wrap gap-2 pt-1.5">

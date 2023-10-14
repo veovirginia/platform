@@ -22,6 +22,7 @@ import { useAtom } from "jotai";
 import { useHydrateAtoms } from "jotai/utils";
 import { type OnboardStepOneValues } from "@/lib/types";
 import { motion } from "framer-motion";
+import { cn } from "@/lib/clientUtils";
 
 const formSchema = z.object({
   name: z
@@ -121,7 +122,7 @@ const OnboardStepOneForm: FC = () => {
     >
       <Form {...form}>
         <form className="grid grid-cols-4 gap-4">
-          <div className="col-span-2">
+          <div className="col-span-4 md:col-span-2">
             <FormField
               control={control}
               name="name"
@@ -140,7 +141,7 @@ const OnboardStepOneForm: FC = () => {
               )}
             />
           </div>
-          <div className="col-span-2">
+          <div className="col-span-4 md:col-span-2">
             <FormField
               control={control}
               name="phone"
@@ -160,13 +161,13 @@ const OnboardStepOneForm: FC = () => {
               )}
             />
           </div>
-          <div className="col-span-2">
+          <div className="col-span-4 md:col-span-2">
             <FormField
               control={control}
               name="graduation"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Expected Graduation</FormLabel>
+                  <FormLabel>Graduation</FormLabel>
                   <FormControl>
                     <PatternInput
                       format="##/##"
@@ -180,7 +181,7 @@ const OnboardStepOneForm: FC = () => {
               )}
             />
           </div>
-          <div className="col-span-2">
+          <div className="col-span-4 md:col-span-2">
             <FormField
               control={control}
               name="major"
@@ -213,7 +214,11 @@ const OnboardStepOneForm: FC = () => {
                       onBlur={() => updateFormValue(field.name, field.value)}
                     />
                   </FormControl>
-                  <FormDescription>
+                  <FormDescription
+                    className={cn({
+                      "text-destructive": watch("idea").length > 128,
+                    })}
+                  >
                     {watch("idea").length}/128 characters
                   </FormDescription>
                   <FormMessage />

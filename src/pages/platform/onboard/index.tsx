@@ -30,7 +30,7 @@ const Onboard: NextPage<
   return (
     <DefaultLayout>
       <div className="flex w-full flex-1 justify-center">
-        <div className="mx-auto w-full max-w-xl pt-20">
+        <div className="mx-auto w-full max-w-xl p-4 pt-8 md:pt-20">
           <OnboardForm />
         </div>
       </div>
