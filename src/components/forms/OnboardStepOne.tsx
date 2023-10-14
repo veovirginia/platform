@@ -116,7 +116,7 @@ const OnboardStepOneForm: FC = () => {
       initial="hidden"
       animate="show"
       exit="hidden"
-      transition={{ duration: 0.23, delay: 0.65 }}
+      transition={{ duration: 0.28, delay: 0.45 }}
       className="p-2"
     >
       <Form {...form}>

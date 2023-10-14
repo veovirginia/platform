@@ -75,6 +75,14 @@ const MEMBERS = [
       "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/avatars/45/45034c9c01c6178c96a5c6fc047f5ef659fc2a60.jpg",
     calId: "drewz/veo-onboard-meeting",
   },
+  {
+    name: "Tony Tran",
+    majors: ["Computer Science"],
+    graduation: "2026",
+    picture:
+      "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/avatars/45/45034c9c01c6178c96a5c6fc047f5ef659fc2a60.jpg",
+    calId: "tony-tran/onboard-meeting",
+  },
 ];
 
 const OnboardStepTwo = () => {
@@ -104,12 +112,10 @@ const OnboardStepTwo = () => {
       });
       cal("on", {
         action: "bookingSuccessful",
-        callback: (error) => {
+        callback: (_event) => {
           void (async () => {
-            const { data } = error.detail;
-
             await updateUser({ onboarded: true });
-            void router.push("/platform/onboard/pending");
+            void router.push("/platform");
           })();
         },
       });
@@ -124,7 +130,7 @@ const OnboardStepTwo = () => {
       initial="hidden"
       animate="show"
       exit="hidden"
-      transition={{ duration: 0.25, delay: 0.45 }}
+      transition={{ duration: 0.28, delay: 0.45 }}
     >
       <div className="w-full">
         <ScrollArea.Root className="h-[20rem] rounded">

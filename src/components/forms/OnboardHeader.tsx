@@ -25,20 +25,23 @@ const ONBOARD_STEPS: OnboardStep[] = [
 const headingVariants = {
   enter: {
     transition: {
-      staggerChildren: 0.1,
-      delayChildren: 0.15,
+      duration: 0.12,
+      staggerChildren: 0.14,
+      delayChildren: 0.05,
     },
   },
   center: {
     transition: {
-      staggerChildren: 0.1,
-      delayChildren: 0.15,
+      duration: 0.12,
+      staggerChildren: 0.14,
+      delayChildren: 0.05,
     },
   },
   exit: {
     transition: {
-      staggerChildren: 0.1,
-      delayChildren: 0.15,
+      duration: 0.12,
+      staggerChildren: 0.14,
+      delayChildren: 0.05,
       staggerDirection: -1,
     },
   },
@@ -48,21 +51,6 @@ const headingItem = {
   enter: { opacity: 0, y: 10 },
   center: { opacity: 1, y: 0 },
   exit: { opacity: 0, y: 10 },
-};
-
-const stepNumber = {
-  enter: {
-    y: 4,
-    opacity: 0,
-  },
-  center: {
-    y: 0,
-    opacity: 1,
-  },
-  exit: {
-    y: -4,
-    opacity: 0,
-  },
 };
 
 const OnboardHeader: FC = () => {
@@ -91,24 +79,9 @@ const OnboardHeader: FC = () => {
         </motion.div>
       </AnimatePresence>
       <div className="h-10">
-        <div className="flex items-center space-x-1 pb-2 text-sm font-medium tracking-wide text-muted-foreground">
-          <span>Step</span>{" "}
-          <AnimatePresence mode="wait" custom={direction}>
-            <motion.div
-              key={step}
-              custom={direction}
-              variants={stepNumber}
-              initial="enter"
-              animate="center"
-              exit="exit"
-            >
-              <motion.div variants={stepNumber} custom={direction}>
-                <p className="">{step}</p>
-              </motion.div>
-            </motion.div>
-          </AnimatePresence>{" "}
-          <span>of {ONBOARD_STEPS.length}</span>
-        </div>
+        <p className="flex items-center space-x-1 pb-2 text-sm font-medium tracking-wide text-muted-foreground">
+          Step {step} of {ONBOARD_STEPS.length}
+        </p>
         <div className="grid grid-cols-2 gap-2 text-sm text-muted-foreground">
           {ONBOARD_STEPS.slice(0, 2).map((_, i) => {
             i += 1;
