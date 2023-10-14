@@ -57,46 +57,67 @@ const OnboardForm = () => {
     </button>
   );
 
+  const variants = {
+    hidden: {
+      opacity: 0,
+    },
+    show: {
+      opacity: 1,
+    },
+  };
+
   return (
     <div className="">
       <OnboardHeader />
-      <motion.div
-        layout
-        className="mt-4 rounded-lg bg-card p-4 shadow shadow-[inset_0px_0.0625rem_0_rgba(255,255,255,0.085)]"
-      >
-        <AnimatePresence mode="wait">
-          {CurrentStep && <CurrentStep key={step} />}
-        </AnimatePresence>
-        <div className="col-span-4 flex w-full items-center justify-between px-2 pb-2 pt-4">
-          <div className="">
-            {step > 1 && (
-              <Button
-                variant="secondary"
-                type="submit"
-                size="sm"
-                onClick={() => stepHandler(-1)}
-              >
-                Previous
-              </Button>
-            )}
-          </div>
-          <div className="">
-            {step < ONBOARD_STEPS.length ? (
-              <Button
-                variant="default"
-                size="sm"
-                type="button"
-                disabled={!isFormValid}
-                onClick={() => void handleNext()}
-              >
-                {step < ONBOARD_STEPS.length ? "Continue" : "Finish"}
-              </Button>
-            ) : (
-              <CalButton />
-            )}
-          </div>
-        </div>
-      </motion.div>
+
+      <AnimatePresence mode="wait">
+        <motion.div
+          layout="size"
+          variants={variants}
+          initial="hidden"
+          animate="show"
+          exit="hidden"
+          className="mt-4 rounded-lg bg-card p-4 shadow shadow-[inset_0px_0.0625rem_0_rgba(255,255,255,0.085)]"
+        >
+          {CurrentStep && (
+            <motion.div key={step}>
+              <CurrentStep />
+            </motion.div>
+          )}
+          <motion.div
+            key="stepControls"
+            className="col-span-4 flex w-full items-center justify-between px-2 pb-2 pt-4"
+          >
+            <div className="">
+              {step > 1 && (
+                <Button
+                  variant="secondary"
+                  type="submit"
+                  size="sm"
+                  onClick={() => stepHandler(-1)}
+                >
+                  Previous
+                </Button>
+              )}
+            </div>
+            <div className="">
+              {step < ONBOARD_STEPS.length ? (
+                <Button
+                  variant="default"
+                  size="sm"
+                  type="button"
+                  disabled={!isFormValid}
+                  onClick={() => void handleNext()}
+                >
+                  {step < ONBOARD_STEPS.length ? "Continue" : "Finish"}
+                </Button>
+              ) : (
+                <CalButton />
+              )}
+            </div>
+          </motion.div>
+        </motion.div>
+      </AnimatePresence>
     </div>
   );
 };

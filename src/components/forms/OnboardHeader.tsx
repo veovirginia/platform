@@ -22,46 +22,47 @@ const ONBOARD_STEPS: OnboardStep[] = [
   },
 ];
 
-const variants = {
-  enter: (direction: number) => {
-    return {
-      // y: direction > 0 ? 50 : -50,
-      // y: 10,
-      // opacity: 0,
-      transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.2,
-      },
-    };
-  },
-  center: {
-    // zIndex: 1,
-    // y: 0,
-    // opacity: 1,
+const headingVariants = {
+  enter: {
     transition: {
       staggerChildren: 0.1,
-      delayChildren: 0.2,
+      delayChildren: 0.15,
     },
   },
-  exit: (direction: number) => {
-    return {
-      // zIndex: 0,
-      // y: -10,
-      // y: direction < 0 ? 50 : -50,
-      // opacity: 0,
-      transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.2,
-        staggerDirection: -1,
-      },
-    };
+  center: {
+    transition: {
+      staggerChildren: 0.1,
+      delayChildren: 0.15,
+    },
+  },
+  exit: {
+    transition: {
+      staggerChildren: 0.1,
+      delayChildren: 0.15,
+      staggerDirection: -1,
+    },
   },
 };
 
-const item = {
+const headingItem = {
   enter: { opacity: 0, y: 10 },
   center: { opacity: 1, y: 0 },
   exit: { opacity: 0, y: 10 },
+};
+
+const stepNumber = {
+  enter: {
+    y: 4,
+    opacity: 0,
+  },
+  center: {
+    y: 0,
+    opacity: 1,
+  },
+  exit: {
+    y: -4,
+    opacity: 0,
+  },
 };
 
 const OnboardHeader: FC = () => {
@@ -72,18 +73,17 @@ const OnboardHeader: FC = () => {
       <AnimatePresence mode="wait" custom={direction}>
         <motion.div
           key={step}
-          custom={direction}
-          variants={variants}
+          variants={headingVariants}
           initial="enter"
           animate="center"
           exit="exit"
         >
-          <motion.div variants={item}>
+          <motion.div variants={headingItem}>
             <HeadingTwo className="mb-0 scroll-m-0 pb-0 font-heading font-bold">
               {ONBOARD_STEPS[step - 1]?.text}
             </HeadingTwo>
           </motion.div>
-          <motion.div variants={item}>
+          <motion.div variants={headingItem}>
             <Paragraph className="pb-6 pt-1">
               {ONBOARD_STEPS[step - 1]?.description}
             </Paragraph>
@@ -91,12 +91,26 @@ const OnboardHeader: FC = () => {
         </motion.div>
       </AnimatePresence>
       <div className="h-10">
-        <p className="pb-2 text-sm font-medium tracking-wide text-muted-foreground">
-          Step {step} of {ONBOARD_STEPS.length}
-        </p>
-
+        <div className="flex items-center space-x-1 pb-2 text-sm font-medium tracking-wide text-muted-foreground">
+          <span>Step</span>{" "}
+          <AnimatePresence mode="wait" custom={direction}>
+            <motion.div
+              key={step}
+              custom={direction}
+              variants={stepNumber}
+              initial="enter"
+              animate="center"
+              exit="exit"
+            >
+              <motion.div variants={stepNumber} custom={direction}>
+                <p className="">{step}</p>
+              </motion.div>
+            </motion.div>
+          </AnimatePresence>{" "}
+          <span>of {ONBOARD_STEPS.length}</span>
+        </div>
         <div className="grid grid-cols-2 gap-2 text-sm text-muted-foreground">
-          {ONBOARD_STEPS.slice(0, 2).map((item, i) => {
+          {ONBOARD_STEPS.slice(0, 2).map((_, i) => {
             i += 1;
             return (
               <div key={i}>
