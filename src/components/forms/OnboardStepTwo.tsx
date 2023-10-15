@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from "react";
+import { type FC, useEffect, useMemo } from "react";
 import { cn } from "@/lib/clientUtils";
 import { motion } from "framer-motion";
 import { getCalApi } from "@calcom/embed-react";
@@ -85,7 +85,7 @@ const MEMBERS = [
   },
 ];
 
-const OnboardStepTwo = () => {
+const OnboardStepTwo: FC = () => {
   useHydrateAtoms([[calMeetingAtom, ""]]);
   const router = useRouter();
 

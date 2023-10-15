@@ -67,7 +67,7 @@ const OnboardHeader: FC = () => {
           exit="exit"
         >
           <motion.div variants={headingItem}>
-            <HeadingTwo className="mb-0 scroll-m-0 pb-0 font-heading font-bold">
+            <HeadingTwo className="mb-0 scroll-m-0 pb-0 font-bold">
               {ONBOARD_STEPS[step - 1]?.text}
             </HeadingTwo>
           </motion.div>

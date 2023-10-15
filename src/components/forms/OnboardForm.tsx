@@ -1,4 +1,4 @@
-import React from "react";
+import React, { type FC } from "react";
 import { useAtom } from "jotai";
 import {
   calMeetingAtom,
@@ -19,7 +19,7 @@ const ONBOARD_STEPS = [
   { id: 2, component: OnboardStepTwo },
 ];
 
-const OnboardForm = () => {
+const OnboardForm: FC = () => {
   const [[step], setStep] = useAtom(stepAtom);
   const [isFormValid] = useAtom(validStepOneAtom);
   const [updateOnboard] = useAtom(updateOnboardAtom);
