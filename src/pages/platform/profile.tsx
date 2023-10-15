@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import { type ReactElement } from "react";
 import { type NextPageWithLayout } from "../_app";
 
-const Platform: NextPageWithLayout = () => {
+const Profile: NextPageWithLayout = () => {
   const router = useRouter();
   const pathname = router.pathname;
   return (
@@ -13,8 +13,8 @@ const Platform: NextPageWithLayout = () => {
   );
 };
 
-Platform.getLayout = (page: ReactElement) => {
+Profile.getLayout = (page: ReactElement) => {
   return <PlatformLayout>{page}</PlatformLayout>;
 };
 
-export default Platform;
+export default Profile;
