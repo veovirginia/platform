@@ -116,7 +116,6 @@ const SigninForm: FC = () => {
           isClosed={!isOpen}
           setClosed={() => {
             setOpen(false);
-            console.log(isOpen);
           }}
         />
         <form
