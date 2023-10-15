@@ -18,3 +18,10 @@ const COLORS: Record<string, string> = {
 export function getMajorClassname(major: string) {
   return COLORS[dash(major.toLowerCase())];
 }
+
+export const UNVERIFIED_ALLOWED_LINKS = ["/profile"];
+export const SLUG_PREFIX = "/platform";
+
+export function isCurrentPage(pathname: string, slug: string) {
+  return pathname === `${SLUG_PREFIX}${slug}`;
+}

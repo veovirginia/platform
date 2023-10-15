@@ -62,6 +62,23 @@
     --destructive: 0 72% 40%;
     --destructive-foreground: 0 0% 98%;
 
+    --text-primary: 0 0% 96%;
+    --text-secondary: 0, 0%, 96%, 0.6;
+    --text-tertiary: 0, 0%, 96%, 0.3;
+    --text-quaternary: 0, 0%, 96%, 0.18;
+
+    --gray-1: 0 0% 90%;
+    --gray-2: 0 0% 83%;
+    --gray-3: 0 0% 64%;
+    --gray-4: 0 0% 45%;
+    --gray-5: 0 0% 32%;
+    --gray-6: 0 0% 25%;
+
+    --fill-primary: 0 0% 28%;
+    --fill-secondary: 0 0% 25%;
+    --fill-tertiary: 0 0% 21%;
+    --fill-quaternary: 0 0% 14%;
+
     --border: 0 0% 20%;
     --input: 0 0% 16%;
     --ring: 212 100% 55%;
