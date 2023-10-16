@@ -85,7 +85,7 @@ const Sidebar: FC<SidebarProps> = ({ session }: SidebarProps) => {
   } = session;
 
   return (
-    <div className="flex w-[280px] flex-col gap-6 bg-card p-3">
+    <aside className="fixed top-0 z-30 hidden h-screen w-full shrink-0 gap-6 border-r border-border bg-card p-3 md:sticky md:flex md:flex-col">
       <h1 className="flex items-center space-x-3 p-3 pb-0 font-heading text-lg font-medium">
         <VEOLogo />
         <span className="font-bold">Platform</span>
@@ -112,7 +112,7 @@ const Sidebar: FC<SidebarProps> = ({ session }: SidebarProps) => {
       <div className="mt-auto flex w-full items-center">
         <SidebarUser image={image} name={name} email={email} />
       </div>
-    </div>
+    </aside>
   );
 };
 
