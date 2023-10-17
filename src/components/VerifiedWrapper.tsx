@@ -22,7 +22,7 @@ const VerifiedWrapper: FC<VerifiedWrapperProps> = ({
     !UNVERIFIED_ALLOWED_LINKS.includes(pathname.substring(SLUG_PREFIX.length))
   )
     return (
-      <div className="mx-auto flex w-full max-w-lg flex-1 items-center text-center">
+      <div className="mx-auto -mt-14 flex h-full w-full max-w-lg flex-1 items-center text-center">
         <div>
           <HeadingTwo>Sorry, you can&apos;t access this page.</HeadingTwo>
           <Paragraph>
