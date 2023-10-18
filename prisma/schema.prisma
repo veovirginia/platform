@@ -15,7 +15,7 @@ model User {
     verified      Boolean   @default(false)
     name          String?   @default("")
     bio           String?   @default("")
-    image         String    @default("")
+    avatar        String    @default("")
     phone         String    @default("")
     graduation    String    @default("")
     major         String    @default("")
