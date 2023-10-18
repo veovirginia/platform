@@ -1,5 +1,5 @@
 import { type FC, type ReactNode } from "react";
-import Navbar from "../global/Navbar";
+import Navbar from "../Navbar";
 
 interface DefaultLayoutProps {
   children: ReactNode;

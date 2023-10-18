@@ -1,10 +1,8 @@
 import { type FC, type ReactNode } from "react";
-import Sidebar from "../Sidebar";
+import Sidebar from "../sidebar/Sidebar";
 import { getSession, useSession } from "next-auth/react";
 import VerifiedWrapper from "../VerifiedWrapper";
 import { type GetServerSidePropsContext } from "next";
-import { Button } from "../ui/button";
-import { SiSubstack, SiGithub } from "react-icons/si";
 import Header from "../Header";
 
 interface PlatformLayoutProps {

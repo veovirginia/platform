@@ -9,7 +9,7 @@ import {
   UserCog2,
   Users2,
 } from "lucide-react";
-import VEOLogo from "./VEOLogo";
+import VEOLogo from "../VEOLogo";
 import SidebarLink from "./SidebarLink";
 import SidebarUser from "./SidebarUser";
 import { type FC } from "react";

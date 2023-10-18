@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { type FC } from "react";
-import { Button } from "../ui/button";
+import { Button } from "./ui/button";
 
 const NAV_LINKS = [
   {

@@ -1,5 +1,5 @@
 import { useMemo, type FC } from "react";
-import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import Image from "next/image";
 import { notionists } from "@dicebear/collection";
 import { createAvatar } from "@dicebear/core";
@@ -35,16 +35,18 @@ const SidebarAvatar: FC<SidebarUserProps> = ({
     }
   }, [image, email]);
   return (
-    <div className="flex items-center gap-2 p-3">
+    <div className="flex max-w-full items-center gap-2 p-3">
       <Avatar>
         <AvatarImage src={image} alt={name} />
         <AvatarFallback>
           <Image src={avatar} alt={name} width={48} height={48} />
         </AvatarFallback>
       </Avatar>
-      <div className="">
-        <h1 className="flex-shrink-0 text-sm">{name}</h1>
-        <p className="flex-shrink-0 pt-0.5 text-xs text-muted-foreground">
+      <div className="truncate">
+        <h1 className="flex-shrink-0 overflow-hidden text-ellipsis text-sm">
+          {name}
+        </h1>
+        <p className="flex-shrink-0 overflow-hidden text-ellipsis pt-0.5 text-xs text-muted-foreground">
           {email}
         </p>
       </div>
