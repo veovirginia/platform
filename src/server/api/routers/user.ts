@@ -5,7 +5,7 @@ import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 import { TRPCError } from "@trpc/server";
 import { type User } from "@prisma/client";
 import { pick } from "radash";
-import { type OnboardStepOneValues } from "@/lib/types";
+import { type OnboardStepOneValues, type UserProfile } from "@/lib/types";
 
 export const userRoute = createTRPCRouter({
   updateUser: protectedProcedure
@@ -78,6 +78,34 @@ export const userRoute = createTRPCRouter({
         "major",
         "idea",
       ]) as OnboardStepOneValues;
+    } catch (error) {
+      if (error instanceof PrismaClientKnownRequestError) {
+        // TODO: Add logger for errors
+        console.error(error);
+      } else {
+        console.error(error);
+      }
+    }
+  }),
+
+  getProfile: protectedProcedure.query(async ({ ctx }) => {
+    try {
+      const user: User | null = await ctx.db.user.findUnique({
+        where: {
+          id: ctx.session.user.id,
+        },
+      });
+
+      if (!user) return null;
+      return pick(user, [
+        "avatar",
+        "name",
+        "phone",
+        "graduation",
+        "major",
+        "idea",
+        "bio",
+      ]) as UserProfile;
     } catch (error) {
       if (error instanceof PrismaClientKnownRequestError) {
         // TODO: Add logger for errors

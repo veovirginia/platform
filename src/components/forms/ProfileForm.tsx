@@ -20,11 +20,13 @@ import {
 } from "../atoms/onboardFormAtom";
 import { useAtom } from "jotai";
 import { useHydrateAtoms } from "jotai/utils";
-import { type OnboardStepOneValues } from "@/lib/types";
-import { motion } from "framer-motion";
+import { type UserProfile, type OnboardStepOneValues } from "@/lib/types";
 import { cn } from "@/lib/clientUtils";
+import { Button } from "../ui/button";
+import { Textarea } from "../ui/textarea";
 
 const formSchema = z.object({
+  avatar: z.string(),
   name: z
     .string()
     .min(2, "Must be at least 2 characters.")
@@ -47,64 +49,74 @@ const formSchema = z.object({
     .max(128, "Can not exceed 32 characters.")
     .regex(/^[a-zA-Z- ]+$/, "Must be a valid major"),
   idea: z.string().min(0).max(128, "Can not exceed 128 characters."),
+  bio: z.string().min(0).max(128, "Can not exceed 128 characters."),
 });
 
-const ProfileForm: FC = () => {
-  useHydrateAtoms([
-    [validStepOneAtom, false],
-    [updateOnboardAtom, false],
-  ]);
+interface ProfileFormProps {
+  defaultValues: UserProfile | null | undefined;
+}
 
-  const [_isFormValid, setFormValid] = useAtom(validStepOneAtom);
-  const [_updateOnboard, setUpdateOnboard] = useAtom(updateOnboardAtom);
-  const [formValues, setFormValues] = useAtom(stepOneValuesAtom);
-
+const ProfileForm: FC<ProfileFormProps> = ({
+  defaultValues,
+}: ProfileFormProps) => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: formValues ?? {
+    defaultValues: defaultValues ?? {
+      avatar: "",
       name: "",
       phone: "",
       graduation: "",
       major: "",
       idea: "",
+      bio: "",
     },
     mode: "onBlur",
   });
 
-  const { control, formState, watch, setValue, trigger } = form;
-  const { isValid, isDirty } = formState;
+  const { control, formState, watch, setValue } = form;
+  const { isValid } = formState;
 
-  useEffect(() => {
-    isValid ? setFormValid(true) : setFormValid(false);
-  }, [isValid, setFormValid]);
-
-  const updateFormValue = (field: string, value: string) => {
-    setFormValues((prev) => ({ ...prev, [field]: value }));
+  const onSubmit = (values: z.infer<typeof formSchema>) => {
+    console.log(values);
   };
-
-  useEffect(() => {
-    const loadValues = async () => {
-      if (formValues.name) {
-        Object.entries(formValues).forEach(([key, value]) => {
-          setValue(key as keyof OnboardStepOneValues, value as string);
-        });
-
-        await trigger();
-      }
-    };
-    loadValues().catch((e) => console.error(e));
-  }, [formValues, setValue, trigger]);
-
-  useEffect(() => {
-    if (isDirty) setUpdateOnboard(true);
-    else setUpdateOnboard(false);
-  }, [isDirty, setUpdateOnboard]);
 
   return (
     <div className="">
       <Form {...form}>
-        <form className="grid grid-cols-4 gap-4">
-          <div className="col-span-4 md:col-span-4">
+        <form
+          className="grid grid-cols-4 gap-4"
+          onSubmit={void form.handleSubmit(onSubmit)}
+        >
+          <div className="col-span-4 flex items-center">
+            <div className="h-16 w-16 rounded-full bg-blue-900"></div>
+            <div className="space-y-3 pl-4">
+              <p className="text-sm font-medium leading-none text-input-text ">
+                Profile Picture
+              </p>
+              <div className="flex items-center gap-2">
+                <Button
+                  type="button"
+                  size="sm"
+                  variant="secondary"
+                  onClick={() => console.log("upload image")}
+                >
+                  Upload avatar
+                </Button>
+                <Button
+                  type="button"
+                  size="sm"
+                  variant="ghost"
+                  onClick={() => console.log("upload image")}
+                >
+                  Remove
+                </Button>
+              </div>
+              {/* <p className="text-sm text-muted-foreground">
+                At least 250x250 recommended.
+              </p> */}
+            </div>
+          </div>
+          <div className="col-span-4 md:col-span-2">
             <FormField
               control={control}
               name="name"
@@ -112,18 +124,14 @@ const ProfileForm: FC = () => {
                 <FormItem>
                   <FormLabel>Full Name</FormLabel>
                   <FormControl>
-                    <Input
-                      placeholder="John Doe"
-                      {...field}
-                      onBlur={() => updateFormValue(field.name, field.value)}
-                    />
+                    <Input placeholder="John Doe" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
           </div>
-          <div className="col-span-4 md:col-span-4">
+          <div className="col-span-4 md:col-span-2">
             <FormField
               control={control}
               name="phone"
@@ -131,12 +139,7 @@ const ProfileForm: FC = () => {
                 <FormItem>
                   <FormLabel>Phone Number</FormLabel>
                   <FormControl>
-                    <PhoneInput
-                      {...field}
-                      onBlur={() => {
-                        updateFormValue(field.name, field.value);
-                      }}
-                    />
+                    <PhoneInput {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -155,7 +158,6 @@ const ProfileForm: FC = () => {
                       format="##/##"
                       placeholder="MM/YY"
                       {...field}
-                      onBlur={() => updateFormValue(field.name, field.value)}
                     />
                   </FormControl>
                   <FormMessage />
@@ -171,11 +173,7 @@ const ProfileForm: FC = () => {
                 <FormItem>
                   <FormLabel>Major</FormLabel>
                   <FormControl>
-                    <Input
-                      placeholder="Primary major"
-                      {...field}
-                      onBlur={() => updateFormValue(field.name, field.value)}
-                    />
+                    <Input placeholder="Primary major" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -190,11 +188,7 @@ const ProfileForm: FC = () => {
                 <FormItem>
                   <FormLabel>Idea</FormLabel>
                   <FormControl>
-                    <Input
-                      placeholder="Optional"
-                      {...field}
-                      onBlur={() => updateFormValue(field.name, field.value)}
-                    />
+                    <Input placeholder="The next big thing" {...field} />
                   </FormControl>
                   <FormDescription
                     className={cn({
@@ -207,6 +201,39 @@ const ProfileForm: FC = () => {
                 </FormItem>
               )}
             />
+          </div>
+
+          <div className="col-span-4">
+            <FormField
+              control={control}
+              name="bio"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>About</FormLabel>
+                  <FormControl>
+                    <Textarea
+                      placeholder="Tell us a bit about yourself"
+                      className="max-h-[10rem] md:h-32 md:resize-none"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormDescription
+                    className={cn({
+                      "text-destructive": watch("bio").length > 128,
+                    })}
+                  >
+                    {watch("bio").length}/128 characters
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
+
+          <div className="col-span-4 flex justify-end">
+            <Button type="button" size="sm" className="" disabled={!isValid}>
+              Save changes
+            </Button>
           </div>
         </form>
       </Form>
