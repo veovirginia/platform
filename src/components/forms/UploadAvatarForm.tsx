@@ -26,9 +26,9 @@ const UploadAvatarForm = () => {
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle className="font-heading">Edit profile</DialogTitle>
+          <DialogTitle className="">Upload avatar</DialogTitle>
           <DialogDescription>
-            Make changes to your profile here. Click save when you&apos;re done.
+            Add a new image for your avatar.
           </DialogDescription>
         </DialogHeader>
         <div className="grid gap-4 py-4">
