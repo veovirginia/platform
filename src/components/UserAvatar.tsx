@@ -8,16 +8,14 @@ interface UserAvatarProps {
   image: string;
   name: string;
   email: string;
-  width: number;
-  height: number;
+  className: string;
 }
 
 const UserAvatar: FC<UserAvatarProps> = ({
   image,
   name,
   email,
-  width,
-  height,
+  className,
 }: UserAvatarProps) => {
   const generatedAvatar = useMemo(() => {
     if (!image) {
@@ -43,7 +41,13 @@ const UserAvatar: FC<UserAvatarProps> = ({
     <Avatar>
       <AvatarImage src={image} alt={name} />
       <AvatarFallback>
-        <Image src={generatedAvatar} alt={name} width={width} height={height} />
+        <Image
+          src={generatedAvatar}
+          alt={name}
+          className={className}
+          width={48}
+          height={48}
+        />
       </AvatarFallback>
     </Avatar>
   );
