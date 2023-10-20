@@ -25,7 +25,7 @@ const Profile: NextPageWithLayout = () => {
               </Paragraph>
             </div>
             <CardBody>
-              <ProfileForm defaultValues={user} />
+              <ProfileForm profile={user} />
             </CardBody>
           </div>
         </div>
@@ -41,6 +41,15 @@ Profile.getLayout = (page: ReactElement) => {
 export async function getServerSideProps(ctx: GetServerSidePropsContext) {
   const session = await getSession(ctx);
   if (!session) return {};
+
+  if (!session.user.onboarded) {
+    return {
+      redirect: {
+        destination: "/platform/onboard",
+        permanent: true,
+      },
+    };
+  }
 
   const helpers = trpcHelpers(session);
 

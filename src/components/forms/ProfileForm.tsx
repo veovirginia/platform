@@ -18,6 +18,7 @@ import { cn } from "@/lib/clientUtils";
 import { Button } from "../ui/button";
 import { Textarea } from "../ui/textarea";
 import UserAvatar from "../UserAvatar";
+import UploadAvatarForm from "./UploadAvatarForm";
 
 const formSchema = z.object({
   avatar: z.string(),
@@ -80,26 +81,20 @@ const ProfileForm: FC<ProfileFormProps> = ({ profile }: ProfileFormProps) => {
           onSubmit={void form.handleSubmit(onSubmit)}
         >
           <div className="col-span-4 flex items-center">
-            <UserAvatar
-              image={profile?.avatar ?? ""}
-              name={profile?.name ?? ""}
-              email={profile?.email ?? ""}
-              width={64}
-              height={64}
-            />
+            <div className="flex-shrink-0">
+              <UserAvatar
+                image={profile?.avatar ?? ""}
+                name={profile?.name ?? ""}
+                email={profile?.email ?? ""}
+                className="h-16 w-16"
+              />
+            </div>
             <div className="space-y-3 pl-4">
               <p className="text-sm font-medium leading-none text-input-text ">
                 Profile Picture
               </p>
               <div className="flex items-center gap-2">
-                <Button
-                  type="button"
-                  size="sm"
-                  variant="secondary"
-                  onClick={() => console.log("upload image")}
-                >
-                  Upload avatar
-                </Button>
+                <UploadAvatarForm />
                 <Button
                   type="button"
                   size="sm"
