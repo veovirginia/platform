@@ -98,6 +98,7 @@ export const userRoute = createTRPCRouter({
 
       if (!user) return null;
       return pick(user, [
+        "email",
         "avatar",
         "name",
         "phone",

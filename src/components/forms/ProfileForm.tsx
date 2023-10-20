@@ -1,5 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { type FC, useEffect } from "react";
+import { type FC } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Input, PatternInput, PhoneInput } from "../ui/input";
@@ -13,17 +13,11 @@ import {
   FormMessage,
 } from "../ui/form";
 import { isValidPhoneNumber } from "react-phone-number-input";
-import {
-  stepOneValuesAtom,
-  updateOnboardAtom,
-  validStepOneAtom,
-} from "../atoms/onboardFormAtom";
-import { useAtom } from "jotai";
-import { useHydrateAtoms } from "jotai/utils";
-import { type UserProfile, type OnboardStepOneValues } from "@/lib/types";
+import { type UserProfile } from "@/lib/types";
 import { cn } from "@/lib/clientUtils";
 import { Button } from "../ui/button";
 import { Textarea } from "../ui/textarea";
+import UserAvatar from "../UserAvatar";
 
 const formSchema = z.object({
   avatar: z.string(),
@@ -53,15 +47,13 @@ const formSchema = z.object({
 });
 
 interface ProfileFormProps {
-  defaultValues: UserProfile | null | undefined;
+  profile: UserProfile | null | undefined;
 }
 
-const ProfileForm: FC<ProfileFormProps> = ({
-  defaultValues,
-}: ProfileFormProps) => {
+const ProfileForm: FC<ProfileFormProps> = ({ profile }: ProfileFormProps) => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: defaultValues ?? {
+    defaultValues: profile ?? {
       avatar: "",
       name: "",
       phone: "",
@@ -88,7 +80,13 @@ const ProfileForm: FC<ProfileFormProps> = ({
           onSubmit={void form.handleSubmit(onSubmit)}
         >
           <div className="col-span-4 flex items-center">
-            <div className="h-16 w-16 rounded-full bg-blue-900"></div>
+            <UserAvatar
+              image={profile?.avatar ?? ""}
+              name={profile?.name ?? ""}
+              email={profile?.email ?? ""}
+              width={64}
+              height={64}
+            />
             <div className="space-y-3 pl-4">
               <p className="text-sm font-medium leading-none text-input-text ">
                 Profile Picture
@@ -111,9 +109,6 @@ const ProfileForm: FC<ProfileFormProps> = ({
                   Remove
                 </Button>
               </div>
-              {/* <p className="text-sm text-muted-foreground">
-                At least 250x250 recommended.
-              </p> */}
             </div>
           </div>
           <div className="col-span-4 md:col-span-2">

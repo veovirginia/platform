@@ -7,6 +7,7 @@ export interface OnboardStepOneValues {
 }
 
 export interface UserProfile extends OnboardStepOneValues {
+  email: string;
   bio: string;
   avatar: string;
 }
