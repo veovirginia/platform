@@ -18,8 +18,7 @@ const SidebarAvatar: FC<SidebarUserProps> = ({
         image={image}
         name={name}
         email={email}
-        width={48}
-        height={48}
+        className="h-12 w-12"
       />
       <div className="truncate">
         <h1 className="flex-shrink-0 overflow-hidden text-ellipsis text-sm">

@@ -88,7 +88,7 @@ const SigninForm: FC = () => {
     const response = await signIn("email", {
       email: values.email,
       redirect: false,
-      callbackUrl: `${env.NEXT_PUBLIC_DOMAIN_URL}/dashboard`,
+      callbackUrl: `${env.NEXT_PUBLIC_DOMAIN_URL}/platform`,
     });
     if (response?.ok) {
       setSuccess(true);
