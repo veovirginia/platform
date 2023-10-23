@@ -6,6 +6,7 @@ import { createAvatar } from "@dicebear/core";
 
 interface UserAvatarProps {
   image: string;
+  previewImage?: string;
   name: string;
   email: string;
   className: string;
@@ -13,6 +14,7 @@ interface UserAvatarProps {
 
 const UserAvatar: FC<UserAvatarProps> = ({
   image,
+  previewImage,
   name,
   email,
   className,
@@ -42,7 +44,7 @@ const UserAvatar: FC<UserAvatarProps> = ({
       <AvatarImage src={image} alt={name} />
       <AvatarFallback>
         <Image
-          src={generatedAvatar}
+          src={previewImage ?? generatedAvatar}
           alt={name}
           className={className}
           width={48}

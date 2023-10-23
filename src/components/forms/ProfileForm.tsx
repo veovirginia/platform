@@ -1,5 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { type FC } from "react";
+import { useState, type FC, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Input, PatternInput, PhoneInput } from "../ui/input";
@@ -18,7 +18,10 @@ import { cn } from "@/lib/clientUtils";
 import { Button } from "../ui/button";
 import { Textarea } from "../ui/textarea";
 import UserAvatar from "../UserAvatar";
-import UploadAvatarForm from "./UploadAvatarForm";
+import UploadAvatarDialog from "../dialogs/UploadAvatarDialog";
+import { useUploadThing } from "@/hooks/useUploadThing";
+import { api } from "@/utils/api";
+import { useSession } from "next-auth/react";
 
 const formSchema = z.object({
   avatar: z.string(),
@@ -52,6 +55,11 @@ interface ProfileFormProps {
 }
 
 const ProfileForm: FC<ProfileFormProps> = ({ profile }: ProfileFormProps) => {
+  const { mutateAsync: updateUser } = api.user.updateUser.useMutation();
+  const { update: updateSession } = useSession();
+  const [imageFiles, setImageFiles] = useState<File[]>([]);
+  const [newAvatarURL, setNewAvatarURL] = useState<string>("");
+  const [isImageDirty, setImageDirty] = useState<boolean>(false);
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: profile ?? {
@@ -66,24 +74,66 @@ const ProfileForm: FC<ProfileFormProps> = ({ profile }: ProfileFormProps) => {
     mode: "onBlur",
   });
 
-  const { control, formState, watch, setValue } = form;
-  const { isValid } = formState;
+  const { control, formState, watch } = form;
+  const { isValid, isDirty: isFormDirty } = formState;
 
-  const onSubmit = (values: z.infer<typeof formSchema>) => {
-    console.log(values);
+  useEffect(() => {
+    if (imageFiles.length > 0) {
+      setImageDirty(true);
+    }
+  }, [imageFiles]);
+
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    try {
+      await startUpload(imageFiles);
+      await updateUser({
+        ...values,
+        avatar: newAvatarURL ? newAvatarURL : profile?.avatar,
+      });
+      await updateSession();
+    } catch (error) {
+      console.error(error);
+    }
   };
+
+  const removeAvatar = () => {
+    setImageFiles([]);
+    setImageDirty(true);
+  };
+
+  const { startUpload } = useUploadThing("imageUpload", {
+    onClientUploadComplete: (res) => {
+      void (() => {
+        try {
+          setNewAvatarURL(res?.[0]?.url ?? "");
+          setImageFiles([]);
+        } catch (error) {
+          console.error(error);
+        }
+      })();
+    },
+    onUploadError: (error) => {
+      console.error(error);
+    },
+  });
 
   return (
     <div className="">
       <Form {...form}>
         <form
           className="grid grid-cols-4 gap-4"
-          onSubmit={void form.handleSubmit(onSubmit)}
+          onSubmit={(e) => {
+            e.preventDefault();
+            void form.handleSubmit(onSubmit)(e);
+          }}
         >
           <div className="col-span-4 flex items-center">
             <div className="flex-shrink-0">
               <UserAvatar
                 image={profile?.avatar ?? ""}
+                previewImage={
+                  imageFiles[0] ? URL.createObjectURL(imageFiles[0]) : undefined
+                }
                 name={profile?.name ?? ""}
                 email={profile?.email ?? ""}
                 className="h-16 w-16"
@@ -94,12 +144,12 @@ const ProfileForm: FC<ProfileFormProps> = ({ profile }: ProfileFormProps) => {
                 Profile Picture
               </p>
               <div className="flex items-center gap-2">
-                <UploadAvatarForm />
+                <UploadAvatarDialog setImageFiles={setImageFiles} />
                 <Button
                   type="button"
                   size="sm"
                   variant="ghost"
-                  onClick={() => console.log("upload image")}
+                  onClick={removeAvatar}
                 >
                   Remove
                 </Button>
@@ -219,10 +269,14 @@ const ProfileForm: FC<ProfileFormProps> = ({ profile }: ProfileFormProps) => {
               )}
             />
           </div>
-
           <div className="col-span-4 flex justify-end">
-            <Button type="button" size="sm" className="" disabled={!isValid}>
-              Save changes
+            <Button
+              type="submit"
+              size="sm"
+              className=""
+              disabled={!isValid || (!isFormDirty && !isImageDirty)}
+            >
+              Update profile
             </Button>
           </div>
         </form>

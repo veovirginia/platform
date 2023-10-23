@@ -31,9 +31,11 @@ export const userRoute = createTRPCRouter({
           major: z
             .string()
             .min(4, "Must be at least 4 characters.")
-            .max(128, "Can not exceed 32 characters.")
+            .max(32, "Can not exceed 32 characters.")
             .regex(/^[a-zA-Z- ]+$/, "Must be a valid major"),
           idea: z.string().max(128, "Can not exceed 128 characters."),
+          avatar: z.string().min(0),
+          bio: z.string().min(0).max(128, "Can not exceed 128 characters."),
           onboarded: z.boolean(),
         })
         .partial(),
