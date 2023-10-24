@@ -2,20 +2,20 @@ import { type FC } from "react";
 import UserAvatar from "../UserAvatar";
 
 interface SidebarUserProps {
-  image: string;
+  avatar: string;
   name: string;
   email: string;
 }
 
 const SidebarAvatar: FC<SidebarUserProps> = ({
-  image,
+  avatar,
   name,
   email,
 }: SidebarUserProps) => {
   return (
     <div className="flex max-w-full items-center gap-2 p-3">
       <UserAvatar
-        image={image}
+        avatar={avatar}
         name={name}
         email={email}
         className="h-12 w-12"

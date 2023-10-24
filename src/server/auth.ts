@@ -27,7 +27,7 @@ declare module "next-auth" {
       id: string;
       email: string;
       name: string;
-      image: string;
+      avatar: string;
       onboarded: boolean;
       verified: boolean;
     };
@@ -37,7 +37,7 @@ declare module "next-auth" {
     id: string;
     email: string;
     name: string;
-    image: string;
+    avatar: string;
     onboarded: boolean;
     verified: boolean;
   }

@@ -22,6 +22,7 @@ import UploadAvatarDialog from "../dialogs/UploadAvatarDialog";
 import { useUploadThing } from "@/hooks/useUploadThing";
 import { api } from "@/utils/api";
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
 
 const formSchema = z.object({
   avatar: z.string(),
@@ -60,6 +61,7 @@ const ProfileForm: FC<ProfileFormProps> = ({ profile }: ProfileFormProps) => {
   const [imageFiles, setImageFiles] = useState<File[]>([]);
   const [newAvatarURL, setNewAvatarURL] = useState<string>("");
   const [isImageDirty, setImageDirty] = useState<boolean>(false);
+  const router = useRouter();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: profile ?? {
@@ -85,12 +87,12 @@ const ProfileForm: FC<ProfileFormProps> = ({ profile }: ProfileFormProps) => {
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
+      await updateUser(values);
       await startUpload(imageFiles);
-      await updateUser({
-        ...values,
-        avatar: newAvatarURL ? newAvatarURL : profile?.avatar,
-      });
+
       await updateSession();
+      setImageDirty(false);
+      router.reload();
     } catch (error) {
       console.error(error);
     }
@@ -99,14 +101,20 @@ const ProfileForm: FC<ProfileFormProps> = ({ profile }: ProfileFormProps) => {
   const removeAvatar = () => {
     setImageFiles([]);
     setImageDirty(true);
+    if (profile) {
+      profile.avatar = "";
+    }
   };
 
   const { startUpload } = useUploadThing("imageUpload", {
     onClientUploadComplete: (res) => {
-      void (() => {
+      void (async () => {
         try {
-          setNewAvatarURL(res?.[0]?.url ?? "");
+          await updateUser({
+            avatar: res?.[0]?.url ?? "",
+          });
           setImageFiles([]);
+          console.log("res", res?.[0]?.url);
         } catch (error) {
           console.error(error);
         }
@@ -130,7 +138,7 @@ const ProfileForm: FC<ProfileFormProps> = ({ profile }: ProfileFormProps) => {
           <div className="col-span-4 flex items-center">
             <div className="flex-shrink-0">
               <UserAvatar
-                image={profile?.avatar ?? ""}
+                avatar={profile?.avatar ?? ""}
                 previewImage={
                   imageFiles[0] ? URL.createObjectURL(imageFiles[0]) : undefined
                 }

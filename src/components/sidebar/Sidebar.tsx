@@ -81,7 +81,7 @@ interface SidebarProps {
 
 const Sidebar: FC<SidebarProps> = ({ session }: SidebarProps) => {
   const {
-    user: { verified, name, email, image },
+    user: { verified, name, email, avatar },
   } = session;
 
   return (
@@ -110,7 +110,7 @@ const Sidebar: FC<SidebarProps> = ({ session }: SidebarProps) => {
         ))}
       </div>
       <div className="mt-auto flex w-full items-center">
-        <SidebarUser image={image} name={name} email={email} />
+        <SidebarUser avatar={avatar} name={name} email={email} />
       </div>
     </aside>
   );
