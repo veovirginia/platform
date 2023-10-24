@@ -14,11 +14,11 @@ import {
   FormDescription,
   FormMessage,
 } from "../ui/form";
-import HeadingThree from "../ui/headingThree";
-import Paragraph from "../ui/paragraph";
 import { env } from "@/env.mjs";
 import { XCircle, CheckCircle2 } from "lucide-react";
 import { Alert, AlertTitle, AlertDescription } from "../ui/alert";
+import HeadingThree from "../ui/headingThree";
+import Paragraph from "../ui/paragraph";
 
 const EMAIL_REGEX = /^[A-Za-z0-9._%+-]+@virginia\.edu$/i;
 
@@ -103,53 +103,61 @@ const SigninForm: FC = () => {
   }, [isSubmitted]);
 
   return (
-    <div className="w-full max-w-md">
-      <Form {...form}>
+    <div className="">
+      <div className="pb-2">
         <HeadingThree className="pb-1">Sign in to VEO</HeadingThree>
         <div className="pb-2">
           <Paragraph className="text-muted-foreground">
             Join the community of builders at the University of Virginia.
           </Paragraph>
         </div>
-        <SigninAlert
-          success={success}
-          isClosed={!isOpen}
-          setClosed={() => {
-            setOpen(false);
-          }}
-        />
-        <form
-          onSubmit={(event) => void handleSubmit(onSubmit)(event)}
-          className="pt-2"
-        >
-          <FormField
-            control={control}
-            name="email"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Email</FormLabel>
-                <FormControl>
-                  <Input placeholder="computingId@virginia.edu" {...field} />
-                </FormControl>
-                <FormDescription>
-                  Your UVA student email address.
-                </FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <div className="pt-4">
-            <Button
-              variant="default"
-              type="submit"
-              disabled={isSubmitting || !isValid || !isDirty}
-              className="w-full"
-            >
-              Continue
-            </Button>
-          </div>
-        </form>
-      </Form>
+      </div>
+      <div className="w-full max-w-md rounded-xl bg-card p-6">
+        <Form {...form}>
+          {isOpen && (
+            <div className="pb-2">
+              <SigninAlert
+                success={success}
+                isClosed={!isOpen}
+                setClosed={() => {
+                  setOpen(false);
+                }}
+              />
+            </div>
+          )}
+          <form
+            onSubmit={(event) => void handleSubmit(onSubmit)(event)}
+            className=""
+          >
+            <FormField
+              control={control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Email</FormLabel>
+                  <FormControl>
+                    <Input placeholder="computingId@virginia.edu" {...field} />
+                  </FormControl>
+                  <FormDescription>
+                    Your UVA student email address.
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <div className="pt-4">
+              <Button
+                variant="default"
+                type="submit"
+                disabled={isSubmitting || !isValid || !isDirty}
+                className="w-full"
+              >
+                Continue
+              </Button>
+            </div>
+          </form>
+        </Form>
+      </div>
     </div>
   );
 };
