@@ -3,7 +3,7 @@ import Sidebar from "../sidebar/Sidebar";
 import { getSession, useSession } from "next-auth/react";
 import VerifiedWrapper from "../VerifiedWrapper";
 import { type GetServerSidePropsContext } from "next";
-import Header from "../Header";
+import MobileSidebar from "../MobileSidebar";
 
 interface PlatformLayoutProps {
   children: ReactNode;
@@ -22,7 +22,8 @@ const PlatformLayout: FC<PlatformLayoutProps> = ({
         <main className="w-full flex-1 items-start md:grid md:grid-cols-[220px_minmax(0,1fr)] lg:grid-cols-[280px_minmax(0,1fr)]">
           <Sidebar session={session} />
           <section className="relative h-full w-full">
-            <Header />
+            {/* <Header /> */}
+            <MobileSidebar session={session} />
             <VerifiedWrapper session={session}>{children}</VerifiedWrapper>
           </section>
         </main>

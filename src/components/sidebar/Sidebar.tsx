@@ -1,79 +1,9 @@
 import { type Session } from "next-auth";
-import {
-  BookOpen,
-  Calendar,
-  Code,
-  Hammer,
-  Home,
-  Key,
-  UserCog2,
-  Users2,
-} from "lucide-react";
 import VEOLogo from "../VEOLogo";
 import SidebarLink from "./SidebarLink";
 import SidebarUser from "./SidebarUser";
 import { type FC } from "react";
-
-const SIDEBAR_LINKS = [
-  {
-    title: "Home",
-    icon: Home,
-    slug: "",
-  },
-  {
-    title: "Events",
-    icon: Calendar,
-    slug: "/events",
-  },
-];
-
-const SIDEBAR_GROUPS = [
-  {
-    title: "Directory",
-    children: [
-      {
-        title: "Users",
-        icon: Users2,
-        slug: "/users",
-      },
-      {
-        title: "Projects",
-        icon: Hammer,
-        slug: "/projects",
-      },
-    ],
-  },
-  {
-    title: "Community",
-    children: [
-      {
-        title: "GitReal",
-        icon: Code,
-        slug: "/gitreal",
-      },
-      {
-        title: "UVA Resources",
-        icon: BookOpen,
-        slug: "/resources",
-      },
-    ],
-  },
-  {
-    title: "Settings",
-    children: [
-      {
-        title: "Profile",
-        icon: UserCog2,
-        slug: "/profile",
-      },
-      {
-        title: "API Keys",
-        icon: Key,
-        slug: "/keys",
-      },
-    ],
-  },
-];
+import { SIDEBAR_GROUPS, SIDEBAR_LINKS } from "@/lib/clientUtils";
 
 interface SidebarProps {
   session: Session;
