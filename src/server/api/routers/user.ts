@@ -6,6 +6,12 @@ import { TRPCError } from "@trpc/server";
 import { type User } from "@prisma/client";
 import { pick } from "radash";
 import { type OnboardStepOneValues, type UserProfile } from "@/lib/types";
+import { utapi } from "@/server/uploadthing";
+
+const deleteImage = async (currentAvatar: string) => {
+  const imageUUID = currentAvatar.substring(currentAvatar.lastIndexOf("/") + 1);
+  await utapi.deleteFiles(imageUUID);
+};
 
 export const userRoute = createTRPCRouter({
   updateUser: protectedProcedure
@@ -42,6 +48,19 @@ export const userRoute = createTRPCRouter({
     )
     .mutation(async ({ input, ctx }) => {
       try {
+        // Delete old avatar from UploadThing if user removed or changed avatar
+        console.log("input: ", input);
+        console.log("ctx: ", ctx.session.user);
+        const { avatar: currentAvatar } = ctx.session.user;
+        if (
+          (currentAvatar !== "" && input.avatar === "") ||
+          (input.avatar !== currentAvatar &&
+            input.avatar !== "" &&
+            currentAvatar !== "")
+        ) {
+          const { avatar: currentAvatar } = ctx.session.user;
+          await deleteImage(currentAvatar);
+        }
         await ctx.db.user.update({
           where: {
             id: ctx.session.user.id,

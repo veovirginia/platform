@@ -2,6 +2,7 @@ import { createUploadthing } from "uploadthing/next-legacy";
 import type { FileRouter } from "uploadthing/next-legacy";
 
 import { getServerAuthSession } from "./auth";
+import { UTApi } from "uploadthing/server";
 
 const f = createUploadthing();
 
@@ -31,3 +32,5 @@ export const uploadRouter = {
 } satisfies FileRouter;
 
 export type ImageFileRouter = typeof uploadRouter;
+
+export const utapi = new UTApi();

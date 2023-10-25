@@ -35,7 +35,11 @@ const UserAvatar: FC<UserAvatarProps> = ({
 
   return (
     <Avatar>
-      <AvatarImage src={avatar} alt={name} className={className} />
+      <AvatarImage
+        src={previewImage ?? avatar}
+        alt={name}
+        className={className}
+      />
       <AvatarFallback>
         <Image
           src={previewImage ?? generatedAvatar}

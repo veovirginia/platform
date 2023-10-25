@@ -22,7 +22,6 @@ import UploadAvatarDialog from "../dialogs/UploadAvatarDialog";
 import { useUploadThing } from "@/hooks/useUploadThing";
 import { api } from "@/utils/api";
 import { useSession } from "next-auth/react";
-import { useRouter } from "next/router";
 
 const formSchema = z.object({
   avatar: z.string(),
@@ -60,7 +59,7 @@ const ProfileForm: FC<ProfileFormProps> = ({ profile }: ProfileFormProps) => {
   const { update: updateSession } = useSession();
   const [imageFiles, setImageFiles] = useState<File[]>([]);
   const [isImageDirty, setImageDirty] = useState<boolean>(false);
-  const router = useRouter();
+  const [currentImage, setCurrentImage] = useState<string>("");
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: profile ?? {
@@ -89,9 +88,10 @@ const ProfileForm: FC<ProfileFormProps> = ({ profile }: ProfileFormProps) => {
       await updateUser(values);
       await startUpload(imageFiles);
 
-      await updateSession();
+      if (isImageDirty) {
+        await updateSession();
+      }
       setImageDirty(false);
-      router.reload();
     } catch (error) {
       console.error(error);
     }
@@ -101,18 +101,23 @@ const ProfileForm: FC<ProfileFormProps> = ({ profile }: ProfileFormProps) => {
     setImageFiles([]);
     setImageDirty(true);
     if (profile) {
+      setCurrentImage(profile.avatar);
       profile.avatar = "";
     }
   };
 
-  const { startUpload } = useUploadThing("imageUpload", {
+  const { startUpload, isUploading } = useUploadThing("imageUpload", {
     onClientUploadComplete: (res) => {
       void (async () => {
         try {
+          const url = res?.[0]?.url;
           await updateUser({
-            avatar: res?.[0]?.url ?? "",
+            avatar: url ?? "",
           });
-          setImageFiles([]);
+          await updateSession();
+          if (profile) {
+            profile.avatar = url ?? "";
+          }
         } catch (error) {
           console.error(error);
         }
@@ -122,6 +127,22 @@ const ProfileForm: FC<ProfileFormProps> = ({ profile }: ProfileFormProps) => {
       console.error(error);
     },
   });
+
+  const resetField = () => {
+    if (profile && currentImage) profile.avatar = currentImage;
+    form.reset(
+      profile ?? {
+        avatar: "",
+        name: "",
+        phone: "",
+        graduation: "",
+        major: "",
+        idea: "",
+        bio: "",
+      },
+    );
+    setImageDirty(false);
+  };
 
   return (
     <div className="">
@@ -274,14 +295,24 @@ const ProfileForm: FC<ProfileFormProps> = ({ profile }: ProfileFormProps) => {
               )}
             />
           </div>
-          <div className="col-span-4 flex justify-end">
+          <div className="col-span-4 flex justify-end gap-2">
+            <Button
+              type="button"
+              size="sm"
+              variant="outline"
+              onClick={resetField}
+            >
+              Reset
+            </Button>
             <Button
               type="submit"
               size="sm"
               className=""
-              disabled={!isValid || (!isFormDirty && !isImageDirty)}
+              disabled={
+                !isValid || (!isFormDirty && !isImageDirty) || isUploading
+              }
             >
-              Update profile
+              {isUploading ? "Uploading image" : "Update profile"}
             </Button>
           </div>
         </form>
