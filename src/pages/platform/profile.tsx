@@ -6,13 +6,9 @@ import Paragraph from "@/components/ui/paragraph";
 import HeadingFour from "@/components/ui/headingFour";
 import CardBody from "@/components/CardBody";
 import { type GetServerSidePropsContext } from "next";
-import { getSession } from "next-auth/react";
-import { trpcHelpers } from "@/lib/serverUtils";
-import { api } from "@/utils/api";
+import { getServerAuthSession } from "../api/auth/[...nextauth]";
 
 const Profile: NextPageWithLayout = () => {
-  const { data: user } = api.user.getProfile.useQuery();
-
   return (
     <div className="flex w-full flex-1 gap-6 p-3 md:p-6">
       <div className="w-full">
@@ -25,7 +21,7 @@ const Profile: NextPageWithLayout = () => {
               </Paragraph>
             </div>
             <CardBody>
-              <ProfileForm profile={user} />
+              <ProfileForm />
             </CardBody>
           </div>
         </div>
@@ -39,7 +35,7 @@ Profile.getLayout = (page: ReactElement) => {
 };
 
 export async function getServerSideProps(ctx: GetServerSidePropsContext) {
-  const session = await getSession(ctx);
+  const session = await getServerAuthSession(ctx);
   if (!session)
     return {
       redirect: {
@@ -57,12 +53,9 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
     };
   }
 
-  const helpers = trpcHelpers(session);
-
-  await helpers.user.getProfile.prefetch();
   return {
     props: {
-      trpcState: helpers.dehydrate(),
+      session,
     },
   };
 }

@@ -19,7 +19,15 @@ const config = {
   },
 
   experimental: {
-    swcPlugins: [["@swc-jotai/react-refresh", {}]],
+    swcPlugins: [
+      ["@swc-jotai/react-refresh", {}],
+      [
+        "next-superjson-plugin",
+        {
+          excluded: [],
+        },
+      ],
+    ],
   },
 };
 

@@ -1,7 +1,7 @@
 import { type NextPage, type GetServerSidePropsContext } from "next";
-import { getSession } from "next-auth/react";
 import DefaultLayout from "@/components/layouts/DefaultLayout";
 import SigninForm from "@/components/forms/SigninForm";
+import { getServerAuthSession } from "../api/auth/[...nextauth]";
 
 const Signin: NextPage = () => {
   return (
@@ -16,7 +16,7 @@ const Signin: NextPage = () => {
 export default Signin;
 
 export async function getServerSideProps(ctx: GetServerSidePropsContext) {
-  const session = await getSession(ctx);
+  const session = await getServerAuthSession(ctx);
   if (session) {
     return {
       redirect: {
