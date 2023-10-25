@@ -84,7 +84,7 @@ const OnboardStepOneForm: FC = () => {
 
   useEffect(() => {
     const loadValues = async () => {
-      if (formValues) {
+      if (formValues.name) {
         Object.entries(formValues).forEach(([key, value]) => {
           setValue(key as keyof OnboardStepOneValues, value as string);
         });

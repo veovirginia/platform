@@ -58,7 +58,7 @@ const CalItem: FC<CalItemProps> = ({
             )}
           </AnimatePresence>
         </div>
-        <Avatar>
+        <Avatar className="h-10 w-10">
           <AvatarImage src={picture} alt={name} />
           <AvatarFallback>
             {firstName?.charAt(0)}

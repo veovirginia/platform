@@ -7,6 +7,7 @@ import {
   type PatternFormatProps,
 } from "react-number-format";
 import { cn } from "@/lib/clientUtils";
+import { useFormField } from "./form";
 
 export type InputProps = React.InputHTMLAttributes<HTMLInputElement>;
 
@@ -32,6 +33,7 @@ export type PhoneInputProps = React.InputHTMLAttributes<HTMLInputElement> & {
 
 const PhoneInput = React.forwardRef<HTMLInputElement, PhoneInputProps>(
   ({ className, value, onBlur, ...props }, ref) => {
+    const { formItemId } = useFormField();
     return (
       <>
         <PhoneNumberInput
@@ -43,6 +45,7 @@ const PhoneInput = React.forwardRef<HTMLInputElement, PhoneInputProps>(
           defaultCountry="US"
           value={value}
           name={props.name ?? ""}
+          id={formItemId}
           placeholder="+## (###) ###-####"
           onBlur={onBlur}
         />

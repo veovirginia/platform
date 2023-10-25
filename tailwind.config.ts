@@ -32,6 +32,26 @@ export default {
           muted: "hsl(var(--major-computer-science-muted-foreground))",
           background: "hsl(var(--major-computer-science-background))",
         },
+        text: {
+          DEFAULT: "hsl(var(--text-primary))",
+          secondary: "hsla(var(--text-secondary))",
+          tertiary: "hsla(var(--text-tertiary))",
+          quaternary: "hsla(var(--text-quaternary))",
+        },
+        fill: {
+          DEFAULT: "hsl(var(--fill-primary))",
+          secondary: "hsl(var(--fill-secondary))",
+          tertiary: "hsl(var(--fill-tertiary))",
+          quaternary: "hsl(var(--fill-quaternary))",
+        },
+        gray: {
+          DEFAULT: "hsl(var(--gray-1))",
+          2: "hsl(var(--gray-2))",
+          3: "hsl(var(--gray-3))",
+          4: "hsl(var(--gray-4))",
+          5: "hsl(var(--gray-5))",
+          6: "hsl(var(--gray-6))",
+        },
         math: {
           DEFAULT: "hsl(var(--major-math-foreground))",
           background: "hsl(var(--major-math-background))",

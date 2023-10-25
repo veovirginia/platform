@@ -11,11 +11,11 @@ model User {
     id            String    @id @default(auto()) @map("_id") @db.ObjectId
     email         String    @unique
     emailVerified DateTime?
-    onboarded     Boolean?  @default(false)
-    verified      Boolean?  @default(false)
+    onboarded     Boolean   @default(false)
+    verified      Boolean   @default(false)
     name          String?   @default("")
     bio           String?   @default("")
-    image         String    @default("")
+    avatar        String    @default("")
     phone         String    @default("")
     graduation    String    @default("")
     major         String    @default("")

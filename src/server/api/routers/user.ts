@@ -5,7 +5,13 @@ import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 import { TRPCError } from "@trpc/server";
 import { type User } from "@prisma/client";
 import { pick } from "radash";
-import { type OnboardStepOneValues } from "@/lib/types";
+import { type OnboardStepOneValues, type UserProfile } from "@/lib/types";
+import { utapi } from "@/server/uploadthing";
+
+const deleteImage = async (currentAvatar: string) => {
+  const imageUUID = currentAvatar.substring(currentAvatar.lastIndexOf("/") + 1);
+  await utapi.deleteFiles(imageUUID);
+};
 
 export const userRoute = createTRPCRouter({
   updateUser: protectedProcedure
@@ -31,15 +37,30 @@ export const userRoute = createTRPCRouter({
           major: z
             .string()
             .min(4, "Must be at least 4 characters.")
-            .max(128, "Can not exceed 32 characters.")
+            .max(32, "Can not exceed 32 characters.")
             .regex(/^[a-zA-Z- ]+$/, "Must be a valid major"),
           idea: z.string().max(128, "Can not exceed 128 characters."),
+          avatar: z.string().min(0),
+          bio: z.string().min(0).max(128, "Can not exceed 128 characters."),
           onboarded: z.boolean(),
         })
         .partial(),
     )
     .mutation(async ({ input, ctx }) => {
       try {
+        // Delete old avatar from UploadThing if user removed or changed avatar
+        console.log("input: ", input);
+        console.log("ctx: ", ctx.session.user);
+        const { avatar: currentAvatar } = ctx.session.user;
+        if (
+          (currentAvatar !== "" && input.avatar === "") ||
+          (input.avatar !== currentAvatar &&
+            input.avatar !== "" &&
+            currentAvatar !== "")
+        ) {
+          const { avatar: currentAvatar } = ctx.session.user;
+          await deleteImage(currentAvatar);
+        }
         await ctx.db.user.update({
           where: {
             id: ctx.session.user.id,
@@ -78,6 +99,35 @@ export const userRoute = createTRPCRouter({
         "major",
         "idea",
       ]) as OnboardStepOneValues;
+    } catch (error) {
+      if (error instanceof PrismaClientKnownRequestError) {
+        // TODO: Add logger for errors
+        console.error(error);
+      } else {
+        console.error(error);
+      }
+    }
+  }),
+
+  getProfile: protectedProcedure.query(async ({ ctx }) => {
+    try {
+      const user: User | null = await ctx.db.user.findUnique({
+        where: {
+          id: ctx.session.user.id,
+        },
+      });
+
+      if (!user) return null;
+      return pick(user, [
+        "email",
+        "avatar",
+        "name",
+        "phone",
+        "graduation",
+        "major",
+        "idea",
+        "bio",
+      ]) as UserProfile;
     } catch (error) {
       if (error instanceof PrismaClientKnownRequestError) {
         // TODO: Add logger for errors

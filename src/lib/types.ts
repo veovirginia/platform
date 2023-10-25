@@ -5,3 +5,9 @@ export interface OnboardStepOneValues {
   major: string;
   idea: string;
 }
+
+export interface UserProfile extends OnboardStepOneValues {
+  email: string;
+  bio: string;
+  avatar: string;
+}

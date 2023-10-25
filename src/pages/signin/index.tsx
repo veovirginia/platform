@@ -6,7 +6,7 @@ import SigninForm from "@/components/forms/SigninForm";
 const Signin: NextPage = () => {
   return (
     <DefaultLayout>
-      <div className="flex w-full flex-1 justify-center pt-24 lg:pt-48">
+      <div className="flex w-full flex-1 flex-col items-center pt-8 md:pt-20">
         <SigninForm />
       </div>
     </DefaultLayout>

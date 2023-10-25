@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { type FC } from "react";
-import { Button } from "../ui/button";
+import { Button } from "./ui/button";
 
 const NAV_LINKS = [
   {
@@ -20,7 +20,7 @@ const NAV_LINKS = [
 const Navbar: FC = () => {
   return (
     <nav className="sticky top-0 flex h-16 w-full items-center">
-      <div className="mx-auto flex w-full max-w-body justify-between">
+      <div className="mx-auto flex w-full max-w-body justify-between p-4">
         <Link href="/">
           <h1 className="flex items-center font-heading text-lg font-bold tracking-wide">
             VEO
@@ -35,7 +35,7 @@ const Navbar: FC = () => {
             ))}
           </ul>
           <Button variant="default" size="xs" type="button">
-            Dashboard
+            Platform
           </Button>
         </div>
       </div>
