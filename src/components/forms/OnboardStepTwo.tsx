@@ -9,6 +9,7 @@ import * as ScrollArea from "@radix-ui/react-scroll-area";
 import CalItem from "../CalItem";
 import { useRouter } from "next/router";
 import { api } from "@/utils/api";
+import { useSession } from "next-auth/react";
 
 const MEMBERS = [
   {
@@ -90,6 +91,7 @@ const OnboardStepTwo: FC = () => {
   const router = useRouter();
 
   const { mutateAsync: updateUser } = api.user.updateUser.useMutation();
+  const { update: updateSession } = useSession();
 
   const container = {
     hidden: {
@@ -115,12 +117,13 @@ const OnboardStepTwo: FC = () => {
         callback: (_event) => {
           void (async () => {
             await updateUser({ onboarded: true });
+            await updateSession();
             void router.push("/platform");
           })();
         },
       });
     })();
-  }, [router, updateUser]);
+  }, [router, updateUser, updateSession]);
 
   const shuffledMembers = useMemo(() => shuffle(MEMBERS), []);
 

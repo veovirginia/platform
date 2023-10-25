@@ -80,7 +80,7 @@ const OnboardForm: FC = () => {
           initial="hidden"
           animate="show"
           exit="hidden"
-          className="mt-4 rounded-lg bg-card p-4 shadow shadow-[inset_0px_0.0625rem_0_rgba(255,255,255,0.085)]"
+          className="mt-4 rounded-lg bg-card p-4"
         >
           {CurrentStep && (
             <motion.div key={step}>

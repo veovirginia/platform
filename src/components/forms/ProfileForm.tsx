@@ -19,6 +19,7 @@ import { Textarea } from "../ui/textarea";
 import { useUploadThing } from "@/hooks/useUploadThing";
 import { api } from "@/utils/api";
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
 
 const formSchema = z.object({
   avatar: z.string(),
@@ -61,7 +62,8 @@ const ProfileForm: FC<ProfileFormProps> = ({
   setImageDirty,
 }: ProfileFormProps) => {
   const { mutateAsync: updateUser } = api.user.updateUser.useMutation();
-  const { data: session, update: updateSession } = useSession();
+  const { data: session } = useSession();
+  const router = useRouter();
   const user = session?.user;
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -89,11 +91,12 @@ const ProfileForm: FC<ProfileFormProps> = ({
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       await updateUser(values);
-      await startUpload(imageFiles);
 
       if (isImageDirty) {
-        await updateSession();
+        await startUpload(imageFiles);
       }
+
+      router.reload();
       setImageDirty(false);
     } catch (error) {
       console.error(error);
@@ -108,10 +111,6 @@ const ProfileForm: FC<ProfileFormProps> = ({
           await updateUser({
             avatar: url ?? "",
           });
-          await updateSession();
-          if (user) {
-            user.avatar = url ?? "";
-          }
         } catch (error) {
           console.error(error);
         }
@@ -278,7 +277,7 @@ const ProfileForm: FC<ProfileFormProps> = ({
                 !isValid || (!isFormDirty && !isImageDirty) || isUploading
               }
             >
-              {isUploading ? "Uploading image" : "Update profile"}
+              {isUploading ? "Updating profile" : "Update profile"}
             </Button>
           </div>
         </form>

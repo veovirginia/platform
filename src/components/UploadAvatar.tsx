@@ -29,8 +29,6 @@ const UploadAvatar: FC<UploadAvatarProps> = ({
     }
   };
 
-  console.log("remount");
-
   return (
     <div className="col-span-4 flex items-center">
       <div className="flex-shrink-0">
