@@ -1,5 +1,5 @@
 import PlatformLayout from "@/components/layouts/PlatformLayout";
-import { type ReactElement } from "react";
+import { useState, type ReactElement } from "react";
 import { type NextPageWithLayout } from "../_app";
 import ProfileForm from "@/components/forms/ProfileForm";
 import Paragraph from "@/components/ui/paragraph";
@@ -7,8 +7,13 @@ import HeadingFour from "@/components/ui/headingFour";
 import CardBody from "@/components/CardBody";
 import { type GetServerSidePropsContext } from "next";
 import { getServerAuthSession } from "../api/auth/[...nextauth]";
+import UploadAvatar from "@/components/UploadAvatar";
 
 const Profile: NextPageWithLayout = () => {
+  const [imageFiles, setImageFiles] = useState<File[]>([]);
+  const [isImageDirty, setImageDirty] = useState<boolean>(false);
+  const [currentImage, setCurrentImage] = useState<string | undefined>("");
+
   return (
     <div className="flex w-full flex-1 gap-6 p-3 md:p-6">
       <div className="w-full">
@@ -21,7 +26,18 @@ const Profile: NextPageWithLayout = () => {
               </Paragraph>
             </div>
             <CardBody>
-              <ProfileForm />
+              <UploadAvatar
+                imageFiles={imageFiles}
+                setImageDirty={setImageDirty}
+                setCurrentImage={setCurrentImage}
+                setImageFiles={setImageFiles}
+              />
+              <ProfileForm
+                imageFiles={imageFiles}
+                isImageDirty={isImageDirty}
+                currentImage={currentImage}
+                setImageDirty={setImageDirty}
+              />
             </CardBody>
           </div>
         </div>

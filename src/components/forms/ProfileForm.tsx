@@ -1,5 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useState, type FC, useEffect } from "react";
+import { type FC, useEffect, type SetStateAction, type Dispatch } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Input, PatternInput, PhoneInput } from "../ui/input";
@@ -16,8 +16,6 @@ import { isValidPhoneNumber } from "react-phone-number-input";
 import { cn } from "@/lib/clientUtils";
 import { Button } from "../ui/button";
 import { Textarea } from "../ui/textarea";
-import UserAvatar from "../UserAvatar";
-import UploadAvatarDialog from "../dialogs/UploadAvatarDialog";
 import { useUploadThing } from "@/hooks/useUploadThing";
 import { api } from "@/utils/api";
 import { useSession } from "next-auth/react";
@@ -49,13 +47,22 @@ const formSchema = z.object({
   bio: z.string().min(0).max(128, "Can not exceed 128 characters."),
 });
 
-const ProfileForm: FC = () => {
+interface ProfileFormProps {
+  imageFiles: File[];
+  isImageDirty: boolean;
+  currentImage: string | undefined;
+  setImageDirty: Dispatch<SetStateAction<boolean>>;
+}
+
+const ProfileForm: FC<ProfileFormProps> = ({
+  imageFiles,
+  isImageDirty,
+  currentImage,
+  setImageDirty,
+}: ProfileFormProps) => {
   const { mutateAsync: updateUser } = api.user.updateUser.useMutation();
-  const { data: profile, update: updateSession } = useSession();
-  const user = profile?.user;
-  const [imageFiles, setImageFiles] = useState<File[]>([]);
-  const [isImageDirty, setImageDirty] = useState<boolean>(false);
-  const [currentImage, setCurrentImage] = useState<string | undefined>("");
+  const { data: session, update: updateSession } = useSession();
+  const user = session?.user;
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: user ?? {
@@ -90,15 +97,6 @@ const ProfileForm: FC = () => {
       setImageDirty(false);
     } catch (error) {
       console.error(error);
-    }
-  };
-
-  const removeAvatar = () => {
-    setImageFiles([]);
-    setImageDirty(true);
-    if (user) {
-      setCurrentImage(user.avatar ?? "");
-      user.avatar = "";
     }
   };
 
@@ -150,34 +148,6 @@ const ProfileForm: FC = () => {
             void form.handleSubmit(onSubmit)(e);
           }}
         >
-          <div className="col-span-4 flex items-center">
-            <div className="flex-shrink-0">
-              <UserAvatar
-                avatar={user?.avatar ?? ""}
-                previewImage={
-                  imageFiles[0] ? URL.createObjectURL(imageFiles[0]) : undefined
-                }
-                name={user?.name ?? ""}
-                className="h-16 w-16"
-              />
-            </div>
-            <div className="space-y-3 pl-4">
-              <p className="text-sm font-medium leading-none text-input-text ">
-                Profile Picture
-              </p>
-              <div className="flex items-center gap-2">
-                <UploadAvatarDialog setImageFiles={setImageFiles} />
-                <Button
-                  type="button"
-                  size="sm"
-                  variant="ghost"
-                  onClick={removeAvatar}
-                >
-                  Remove
-                </Button>
-              </div>
-            </div>
-          </div>
           <div className="col-span-4 md:col-span-2">
             <FormField
               control={control}
