@@ -1,15 +1,15 @@
-import { type Session } from "next-auth";
 import VEOLogo from "../VEOLogo";
 import SidebarLink from "./SidebarLink";
 import SidebarUser from "./SidebarUser";
 import { type FC } from "react";
 import { SIDEBAR_GROUPS, SIDEBAR_LINKS } from "@/lib/clientUtils";
+import { useSession } from "next-auth/react";
 
-interface SidebarProps {
-  session: Session;
-}
+const Sidebar: FC = () => {
+  const { data: session } = useSession();
 
-const Sidebar: FC<SidebarProps> = ({ session }: SidebarProps) => {
+  if (!session) return null;
+
   const {
     user: { verified, name, email, avatar },
   } = session;

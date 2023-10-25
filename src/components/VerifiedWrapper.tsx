@@ -1,21 +1,23 @@
-import { type Session } from "next-auth";
 import { type FC, type ReactNode } from "react";
 import Paragraph from "./ui/paragraph";
 import HeadingTwo from "./ui/headingTwo";
 import { useRouter } from "next/router";
 import { SLUG_PREFIX, UNVERIFIED_ALLOWED_LINKS } from "@/lib/clientUtils";
+import { useSession } from "next-auth/react";
 
 interface VerifiedWrapperProps {
-  session: Session;
   children: ReactNode;
 }
 
 const VerifiedWrapper: FC<VerifiedWrapperProps> = ({
-  session,
   children,
 }: VerifiedWrapperProps) => {
   const router = useRouter();
   const pathname = router.pathname;
+
+  const { data: session } = useSession();
+
+  if (!session) return null;
 
   if (
     !session.user.verified &&

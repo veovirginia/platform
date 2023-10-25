@@ -13,7 +13,6 @@ import {
   FormMessage,
 } from "../ui/form";
 import { isValidPhoneNumber } from "react-phone-number-input";
-import { type UserProfile } from "@/lib/types";
 import { cn } from "@/lib/clientUtils";
 import { Button } from "../ui/button";
 import { Textarea } from "../ui/textarea";
@@ -50,19 +49,16 @@ const formSchema = z.object({
   bio: z.string().min(0).max(128, "Can not exceed 128 characters."),
 });
 
-interface ProfileFormProps {
-  profile: UserProfile | null | undefined;
-}
-
-const ProfileForm: FC<ProfileFormProps> = ({ profile }: ProfileFormProps) => {
+const ProfileForm: FC = () => {
   const { mutateAsync: updateUser } = api.user.updateUser.useMutation();
-  const { update: updateSession } = useSession();
+  const { data: profile, update: updateSession } = useSession();
+  const user = profile?.user;
   const [imageFiles, setImageFiles] = useState<File[]>([]);
   const [isImageDirty, setImageDirty] = useState<boolean>(false);
-  const [currentImage, setCurrentImage] = useState<string>("");
+  const [currentImage, setCurrentImage] = useState<string | undefined>("");
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: profile ?? {
+    defaultValues: user ?? {
       avatar: "",
       name: "",
       phone: "",
@@ -100,9 +96,9 @@ const ProfileForm: FC<ProfileFormProps> = ({ profile }: ProfileFormProps) => {
   const removeAvatar = () => {
     setImageFiles([]);
     setImageDirty(true);
-    if (profile) {
-      setCurrentImage(profile.avatar);
-      profile.avatar = "";
+    if (user) {
+      setCurrentImage(user.avatar ?? "");
+      user.avatar = "";
     }
   };
 
@@ -115,8 +111,8 @@ const ProfileForm: FC<ProfileFormProps> = ({ profile }: ProfileFormProps) => {
             avatar: url ?? "",
           });
           await updateSession();
-          if (profile) {
-            profile.avatar = url ?? "";
+          if (user) {
+            user.avatar = url ?? "";
           }
         } catch (error) {
           console.error(error);
@@ -129,9 +125,9 @@ const ProfileForm: FC<ProfileFormProps> = ({ profile }: ProfileFormProps) => {
   });
 
   const resetField = () => {
-    if (profile && currentImage) profile.avatar = currentImage;
+    if (user && currentImage) user.avatar = currentImage;
     form.reset(
-      profile ?? {
+      user ?? {
         avatar: "",
         name: "",
         phone: "",
@@ -157,11 +153,11 @@ const ProfileForm: FC<ProfileFormProps> = ({ profile }: ProfileFormProps) => {
           <div className="col-span-4 flex items-center">
             <div className="flex-shrink-0">
               <UserAvatar
-                avatar={profile?.avatar ?? ""}
+                avatar={user?.avatar ?? ""}
                 previewImage={
                   imageFiles[0] ? URL.createObjectURL(imageFiles[0]) : undefined
                 }
-                name={profile?.name ?? ""}
+                name={user?.name ?? ""}
                 className="h-16 w-16"
               />
             </div>

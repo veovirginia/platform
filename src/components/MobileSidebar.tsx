@@ -13,17 +13,10 @@ import { SIDEBAR_LINKS, SIDEBAR_GROUPS } from "@/lib/clientUtils";
 import SidebarLink from "./sidebar/SidebarLink";
 import SidebarUser from "./sidebar/SidebarUser";
 import { type Session } from "next-auth";
+import { useSession } from "next-auth/react";
 
-interface MobileSidebarProps {
-  session: Session;
-}
-
-const MobileSidebar: FC<MobileSidebarProps> = ({
-  session,
-}: MobileSidebarProps) => {
-  const {
-    user: { verified, name, email, avatar },
-  } = session;
+const MobileSidebar: FC = () => {
+  const { data: session } = useSession();
 
   const [open, setOpen] = useState(false);
 
@@ -40,6 +33,12 @@ const MobileSidebar: FC<MobileSidebarProps> = ({
       window.removeEventListener("resize", handleResize);
     };
   }, []);
+
+  if (!session) return null;
+
+  const {
+    user: { verified, name, avatar, email },
+  } = session;
 
   return (
     <div className="sticky left-0 top-0 z-50 flex h-14 w-full items-center justify-between border-b border-border bg-card px-3 md:hidden">
