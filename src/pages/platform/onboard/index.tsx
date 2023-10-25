@@ -4,7 +4,6 @@ import {
   type GetServerSidePropsContext,
   type InferGetServerSidePropsType,
 } from "next";
-import { getSession } from "next-auth/react";
 import {
   stepAtom,
   stepOneValuesAtom,
@@ -13,6 +12,7 @@ import OnboardForm from "@/components/forms/OnboardForm";
 import { useHydrateAtoms } from "jotai/utils";
 import { api } from "@/utils/api";
 import { trpcHelpers } from "@/lib/serverUtils";
+import { getServerAuthSession } from "@/pages/api/auth/[...nextauth]";
 
 const Onboard: NextPage<
   InferGetServerSidePropsType<typeof getServerSideProps>
@@ -41,7 +41,7 @@ const Onboard: NextPage<
 export default Onboard;
 
 export async function getServerSideProps(ctx: GetServerSidePropsContext) {
-  const session = await getSession(ctx);
+  const session = await getServerAuthSession(ctx);
   if (!session) {
     return {
       redirect: {
@@ -65,6 +65,7 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
   await helpers.user.getOnboardUser.prefetch();
   return {
     props: {
+      session,
       trpcState: helpers.dehydrate(),
     },
   };
