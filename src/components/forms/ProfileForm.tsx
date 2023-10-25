@@ -59,7 +59,6 @@ const ProfileForm: FC<ProfileFormProps> = ({ profile }: ProfileFormProps) => {
   const { mutateAsync: updateUser } = api.user.updateUser.useMutation();
   const { update: updateSession } = useSession();
   const [imageFiles, setImageFiles] = useState<File[]>([]);
-  const [newAvatarURL, setNewAvatarURL] = useState<string>("");
   const [isImageDirty, setImageDirty] = useState<boolean>(false);
   const router = useRouter();
   const form = useForm<z.infer<typeof formSchema>>({
@@ -114,7 +113,6 @@ const ProfileForm: FC<ProfileFormProps> = ({ profile }: ProfileFormProps) => {
             avatar: res?.[0]?.url ?? "",
           });
           setImageFiles([]);
-          console.log("res", res?.[0]?.url);
         } catch (error) {
           console.error(error);
         }
@@ -143,7 +141,6 @@ const ProfileForm: FC<ProfileFormProps> = ({ profile }: ProfileFormProps) => {
                   imageFiles[0] ? URL.createObjectURL(imageFiles[0]) : undefined
                 }
                 name={profile?.name ?? ""}
-                email={profile?.email ?? ""}
                 className="h-16 w-16"
               />
             </div>

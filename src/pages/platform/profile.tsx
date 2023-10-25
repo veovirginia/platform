@@ -40,7 +40,13 @@ Profile.getLayout = (page: ReactElement) => {
 
 export async function getServerSideProps(ctx: GetServerSidePropsContext) {
   const session = await getSession(ctx);
-  if (!session) return {};
+  if (!session)
+    return {
+      redirect: {
+        destination: "/signin",
+        permanent: true,
+      },
+    };
 
   if (!session.user.onboarded) {
     return {

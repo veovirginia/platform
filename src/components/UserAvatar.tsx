@@ -8,7 +8,6 @@ interface UserAvatarProps {
   avatar: string;
   previewImage?: string;
   name: string;
-  email: string;
   className: string;
 }
 
@@ -16,7 +15,6 @@ const UserAvatar: FC<UserAvatarProps> = ({
   avatar,
   previewImage,
   name,
-  email,
   className,
 }: UserAvatarProps) => {
   const generatedAvatar = useMemo(() => {
