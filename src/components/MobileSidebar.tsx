@@ -12,7 +12,6 @@ import {
 import { SIDEBAR_LINKS, SIDEBAR_GROUPS } from "@/lib/clientUtils";
 import SidebarLink from "./sidebar/SidebarLink";
 import SidebarUser from "./sidebar/SidebarUser";
-import { type Session } from "next-auth";
 import { useSession } from "next-auth/react";
 
 const MobileSidebar: FC = () => {

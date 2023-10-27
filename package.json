@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "build": "next build",
+    "build": "doppler run next build",
     "db:generate": "doppler run npx prisma generate",
     "db:studio": "doppler run npx prisma studio",
     "dev": "doppler run next dev",
