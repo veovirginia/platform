@@ -1,31 +1,20 @@
-import { type NextPage, type GetServerSidePropsContext } from "next";
-import { getSession } from "next-auth/react";
+import PlatformLayout from "@/components/layouts/PlatformLayout";
+import { useRouter } from "next/router";
+import { type ReactElement } from "react";
+import { type NextPageWithLayout } from "../_app";
 
-const Platform: NextPage = () => {
-  return <div className=""></div>;
+const Platform: NextPageWithLayout = () => {
+  const router = useRouter();
+  const pathname = router.pathname;
+  return (
+    <div className="flex w-full flex-1 gap-6">
+      <div className="">{pathname}</div>
+    </div>
+  );
+};
+
+Platform.getLayout = (page: ReactElement) => {
+  return <PlatformLayout>{page}</PlatformLayout>;
 };
 
 export default Platform;
-
-export async function getServerSideProps(ctx: GetServerSidePropsContext) {
-  const session = await getSession(ctx);
-  if (!session) {
-    return {
-      redirect: {
-        destination: "/signin",
-        permanent: true,
-      },
-    };
-  }
-  if (!session.user.onboarded) {
-    return {
-      redirect: {
-        destination: "/platform/onboard",
-        permanent: true,
-      },
-    };
-  }
-  return {
-    props: {},
-  };
-}

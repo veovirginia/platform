@@ -1,4 +1,4 @@
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/clientUtils";
 import { type FC, type ReactNode } from "react";
 
 interface HeadingThreeProps {
@@ -13,7 +13,7 @@ const HeadingThree: FC<HeadingThreeProps> = ({
   return (
     <h3
       className={cn(
-        "scroll-m-20 text-2xl font-semibold tracking-tight",
+        "scroll-m-20 font-heading text-2xl font-semibold tracking-tight",
         className,
       )}
     >

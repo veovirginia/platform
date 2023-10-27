@@ -21,8 +21,57 @@ export default {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
+        "input-text": "hsl(var(--input-text))",
+        "input-placeholder": "hsl(var(--input-placeholder))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
+        paragraph: "hsl(var(--paragraph))",
+        tag: "hsl(var(--tag))",
+        "computer-science": {
+          DEFAULT: "hsl(var(--major-computer-science-foreground))",
+          muted: "hsl(var(--major-computer-science-muted-foreground))",
+          background: "hsl(var(--major-computer-science-background))",
+        },
+        text: {
+          DEFAULT: "hsl(var(--text-primary))",
+          secondary: "hsla(var(--text-secondary))",
+          tertiary: "hsla(var(--text-tertiary))",
+          quaternary: "hsla(var(--text-quaternary))",
+        },
+        fill: {
+          DEFAULT: "hsl(var(--fill-primary))",
+          secondary: "hsl(var(--fill-secondary))",
+          tertiary: "hsl(var(--fill-tertiary))",
+          quaternary: "hsl(var(--fill-quaternary))",
+        },
+        gray: {
+          DEFAULT: "hsl(var(--gray-1))",
+          2: "hsl(var(--gray-2))",
+          3: "hsl(var(--gray-3))",
+          4: "hsl(var(--gray-4))",
+          5: "hsl(var(--gray-5))",
+          6: "hsl(var(--gray-6))",
+        },
+        math: {
+          DEFAULT: "hsl(var(--major-math-foreground))",
+          background: "hsl(var(--major-math-background))",
+        },
+        statistics: {
+          DEFAULT: "hsl(var(--major-statistics-foreground))",
+          background: "hsl(var(--major-statistics-background))",
+        },
+        english: {
+          DEFAULT: "hsl(var(--major-english-foreground))",
+          background: "hsl(var(--major-english-background))",
+        },
+        commerce: {
+          DEFAULT: "hsl(var(--major-commerce-foreground))",
+          background: "hsl(var(--major-commerce-background))",
+        },
+        economics: {
+          DEFAULT: "hsl(var(--major-economics-foreground))",
+          background: "hsl(var(--major-economics-background))",
+        },
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",
@@ -30,6 +79,7 @@ export default {
         secondary: {
           DEFAULT: "hsl(var(--secondary))",
           foreground: "hsl(var(--secondary-foreground))",
+          border: "hsl(var(--secondary-border))",
         },
         destructive: {
           DEFAULT: "hsl(var(--destructive))",
@@ -76,6 +126,7 @@ export default {
       },
       fontFamily: {
         sans: ["var(--font-inter)"],
+        heading: ["var(--font-manrope)"],
       },
     },
   },

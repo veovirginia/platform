@@ -37,33 +37,74 @@
  
   .dark { */
   :root {
-    --background: 240 12% 5%;
+    --background: 0 0% 7%;
     --foreground: 0 0% 98%;
 
-    --card: 0 0% 3.9%;
+    --card: 0 0% 12%;
     --card-foreground: 0 0% 98%;
 
-    --popover: 0 0% 3.9%;
+    --popover: 0 0% 14%;
     --popover-foreground: 0 0% 98%;
 
-    --primary: 0 0% 98%;
-    --primary-foreground: 0 0% 9%;
+    --primary: 212 100% 55%;
+    --primary-foreground: 0 0% 98%;
 
-    --secondary: 0 0% 14.9%;
+    --secondary: 0 0% 17.5%;
     --secondary-foreground: 0 0% 98%;
+    --secondary-border: 0 0% 28%;
 
     --muted: 0 0% 14.9%;
-    --muted-foreground: 0 0% 63.9%;
+    --muted-foreground: 0 0% 56%;
 
     --accent: 0 0% 14.9%;
     --accent-foreground: 0 0% 98%;
 
-    --destructive: 0 72% 35%;
+    --destructive: 0 72% 40%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 0 0% 14.9%;
-    --input: 0 0% 14.9%;
-    --ring: 0 0% 83.1%;
+    --text-primary: 0 0% 96%;
+    --text-secondary: 0, 0%, 96%, 0.6;
+    --text-tertiary: 0, 0%, 96%, 0.3;
+    --text-quaternary: 0, 0%, 96%, 0.18;
+
+    --gray-1: 0 0% 90%;
+    --gray-2: 0 0% 83%;
+    --gray-3: 0 0% 64%;
+    --gray-4: 0 0% 45%;
+    --gray-5: 0 0% 32%;
+    --gray-6: 0 0% 25%;
+
+    --fill-primary: 0 0% 28%;
+    --fill-secondary: 0 0% 25%;
+    --fill-tertiary: 0 0% 21%;
+    --fill-quaternary: 0 0% 14%;
+
+    --border: 0 0% 20%;
+    --input: 0 0% 16%;
+    --ring: 212 100% 55%;
+    --input-text: 0 0% 90%;
+    --input-placeholder: 0 0% 45%;
+    --tag: 0 0% 70%;
+
+    --major-computer-science-foreground: 187 55% 62%;
+    --major-computer-science-background: 187 34% 19%;
+
+    --major-math-foreground: 235 95% 75%;
+    --major-math-background: 235 34% 23%;
+
+    --major-statistics-foreground: 326 80% 70%;
+    --major-statistics-background: 257 34% 26%;
+
+    --major-english-foreground: 113 65% 64%;
+    --major-english-background: 113 43% 14%;
+
+    --major-commerce-foreground: 34 97% 50%;
+    --major-commerce-background: 34 84% 16%;
+
+    --major-economics-foreground: 47 87% 70%;
+    --major-economics-background: 47 74.5% 16%;
+
+    --paragraph: 0 0% 56%;
 
     --radius: 0.5rem;
   }

@@ -17,6 +17,18 @@ const config = {
     locales: ["en"],
     defaultLocale: "en",
   },
+
+  experimental: {
+    swcPlugins: [
+      ["@swc-jotai/react-refresh", {}],
+      [
+        "next-superjson-plugin",
+        {
+          excluded: [],
+        },
+      ],
+    ],
+  },
 };
 
 export default config;

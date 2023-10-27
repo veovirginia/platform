@@ -1,7 +1,7 @@
 import * as React from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/clientUtils";
 import { X } from "lucide-react";
 
 const alertVariants = cva(
@@ -13,7 +13,7 @@ const alertVariants = cva(
         destructive:
           "border-destructive/50 text-destructive dark:border-destructive [&>svg]:text-destructive",
         successful:
-          "border-green-600/50 text-green-600 dark:border-green-600 [&>svg]:text-green-600",
+          "border-green-600/50 text-green-600 bg-green-600/5 dark:border-green-600 [&>svg]:text-green-600",
       },
     },
     defaultVariants: {
