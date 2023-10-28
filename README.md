@@ -31,8 +31,6 @@ Make sure you have the following tools installed:
 
 ### Setup
 
-### Setup
-
 1. Clone the repository:
 
    ```bash
