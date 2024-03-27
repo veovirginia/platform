@@ -13,7 +13,7 @@ const deleteImage = async (currentAvatar: string) => {
   await utapi.deleteFiles(imageUUID);
 };
 
-export const userRouter = createTRPCRouter({
+export const userRoute = createTRPCRouter({
   updateUser: protectedProcedure
     .input(
       z
