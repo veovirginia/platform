@@ -49,6 +49,7 @@
   },
   "devDependencies": {
     "@swc-jotai/react-refresh": "^0.1.0",
+    "@tailwindcss/aspect-ratio": "^0.4.2",
     "@types/eslint": "^8.56.2",
     "@types/node": "^20.11.20",
     "@types/nodemailer": "^6.4.14",
