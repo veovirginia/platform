@@ -27,6 +27,9 @@ const config = {
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
+        "light-background": "hsl(var(--light-background))",
+        "dark-background": "hsl(var(--dark-background))",
+        "light-background-border": "hsl(var(--light-background-border))",
         foreground: "hsl(var(--foreground))",
         primary: {
           DEFAULT: "hsl(var(--primary))",
@@ -78,7 +81,13 @@ const config = {
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  corePlugins: {
+    aspectRatio: false,
+  },
+  plugins: [
+    require("tailwindcss-animate"),
+    require("@tailwindcss/aspect-ratio"),
+  ],
 } satisfies Config;
 
 export default config;
