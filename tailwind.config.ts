@@ -18,7 +18,10 @@ const config = {
       },
     },
     extend: {
-      fontFamily: {},
+      fontFamily: {
+        sans: ["var(--font-inter)"],
+        heading: ["var(--font-manrope)"],
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
