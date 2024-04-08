@@ -2,35 +2,30 @@ import Link from "next/link";
 
 import { getServerAuthSession } from "@/server/auth";
 import { Button } from "@/components/ui/button";
+import Navbar from "@/components/Navbar";
+import SupportCompanies from "@/components/landing/sections/SupportCompanies";
 
 export default async function Home() {
   const session = await getServerAuthSession();
 
   return (
     <div className="">
-      <nav className="sticky top-0 w-full border-b border-neutral-500/20 bg-transparent py-4 filter backdrop-blur-sm">
-        <div className="mx-auto flex max-w-5xl justify-between">
-          <h1 className="font-heading text-lg font-bold">Luminary</h1>
-
-          <div className="">
-            <Link href="/signin">
-              <Button className="to-primary-light bg-gradient-to-t from-primary">
-                Sign in
-              </Button>
-            </Link>
-          </div>
-        </div>
-      </nav>
-      <main className="mx-auto flex min-h-screen flex-col items-center justify-center text-white">
-        <div className="absolute top-0 z-[-2] h-screen w-screen bg-dark-background bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(49,104,214,0.2),rgba(255,255,255,0))]"></div>
+      <Navbar />
+      <main className="mx-auto flex min-h-screen flex-col items-center justify-center pt-24 text-white">
+        <div className="absolute top-0 z-[-2] h-screen w-full bg-dark-background bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(49,104,214,0.2),rgba(255,255,255,0))]"></div>
         <section className="min-h-screen w-full py-16">
           <div className="mx-auto w-full max-w-5xl space-y-8 py-8">
             <div className="flex flex-col items-center space-y-6 text-center">
-              <h1 className="bg-gradient-to-b from-neutral-200 to-neutral-500 bg-clip-text font-heading text-6xl font-bold leading-[1.25] tracking-tight text-transparent">
-                Empowering the next generation of young entrepreneurs
-              </h1>
+              <div>
+                <h1 className="bg-gradient-to-b from-white to-neutral-300 bg-clip-text font-heading text-6xl font-bold leading-[1.25] tracking-tight text-transparent">
+                  Empowering the next generation
+                </h1>
+                <h1 className="bg-gradient-to-b from-white to-neutral-300 bg-clip-text font-heading text-6xl font-bold leading-[1.25] tracking-tight text-transparent">
+                  of student entrepreneurs
+                </h1>
+              </div>
 
-              <p className="max-w-2xl text-lg text-neutral-400">
+              <p className="max-w-2xl text-lg leading-[1.5] text-neutral-400">
                 We are a community of builders at the University of Virginia
                 passionate about solving today&apos;s problems to build
                 tomorrow&apos;s world.
@@ -38,13 +33,15 @@ export default async function Home() {
             </div>
             <div className="flex items-center justify-center space-x-4">
               <Link href="/signin">
-                <Button className="px-8 py-4">Get started</Button>
-              </Link>
-              <Link href="/signin">
-                <Button className="px-8 py-4" variant="secondary">
-                  Learn more
+                <Button className="rounded-full bg-white px-8 py-4 text-black hover:bg-gray-2">
+                  Get Started
                 </Button>
               </Link>
+              {/* <Link href="/signin">
+                <Button className="py-4" variant="secondary">
+                  Learn more
+                </Button>
+              </Link> */}
             </div>
           </div>
         </section>
@@ -54,19 +51,21 @@ export default async function Home() {
             <span className="">Brex</span>
           </div>
         </section> */}
-        <section className="flex h-full min-h-[24rem] w-[95%] items-center justify-center rounded-[3rem] bg-light-background ">
-          <div className="space-y-2 text-center">
-            <h1 className="text-4xl font-semibold">
+        {/* <SupportCompanies /> */}
+        <section className="flex h-full min-h-[20rem] w-full max-w-7xl items-center justify-center rounded-[3rem] bg-light-background ">
+          <div className="text-center">
+            <p className="font-medium text-cyan-500">Become a member</p>
+            <h1 className="pb-4 pt-2 font-heading text-4xl font-bold leading-8">
               Turn your ideas into impact
             </h1>
-            <p className="text-lg font-normal text-neutral-200">
-              Join over <span className="font-semibold">50</span> student
-              builders at the University of Virginia.
+            <p className="text-lg font-normal text-neutral-400">
+              Join a community of student builders at the University of
+              Virginia.
             </p>
           </div>
         </section>
-        <section className="grid min-h-screen w-[95%] grid-cols-2 gap-8 py-12">
-          <div className="max-w-lg py-16 text-5xl font-semibold leading-[1.25]">
+        <section className="mx-auto grid min-h-screen w-full max-w-7xl grid-cols-2 gap-8 py-12">
+          <div className="mx-auto max-w-lg py-16 font-heading text-5xl font-bold leading-[1.25]">
             <h1 className="">From Idea to Launch</h1>
             <h2 className="text-neutral-500">
               Guiding members from brainstorming to acquiring their first
@@ -75,8 +74,8 @@ export default async function Home() {
           </div>
           <div className="h-full w-full rounded-3xl bg-cyan-500">s</div>
         </section>
-        <section className="grid min-h-screen w-[95%] grid-cols-2 gap-8 py-12">
-          <div className="max-w-lg py-16 text-5xl font-semibold leading-[1.25]">
+        <section className="grid min-h-screen w-full max-w-7xl grid-cols-2 gap-8 py-12">
+          <div className="mx-auto max-w-lg py-16 text-5xl font-semibold leading-[1.25]">
             <h1 className="">Connect & Collaborate</h1>
             <h2 className="text-neutral-500">
               Unlock your potential by networking with peers, alumni, and
@@ -140,15 +139,25 @@ export default async function Home() {
             </h1>
           </div>
         </section>
-        <section className="mx-auto w-full max-w-5xl py-16">
-          <div className="grid grid-cols-2 gap-8">
-            <div className=""></div>
-            <div className="bg-blue-500">dsada</div>
+        <section className="mx-auto w-full max-w-7xl py-16">
+          <div className="grid grid-cols-1 gap-8">
+            <div className="grid grid-cols-3 gap-8">
+              <div className="h-32 bg-blue-500">dd</div>
+
+              <div className="h-32 bg-blue-500">dd</div>
+
+              <div className="h-32 bg-blue-500">dd</div>
+            </div>
+            <div className="grid grid-cols-2">
+              <div className="h-32 bg-blue-500">dd</div>
+
+              <div className="h-32 bg-blue-500">dd</div>
+            </div>
           </div>
         </section>
-        <section className="relative h-full min-h-screen w-full">
+        {/* <section className="relative h-full min-h-screen w-full">
           <div className="absolute inset-0 -z-10 h-full w-full items-center px-5 py-24 [background:radial-gradient(150%_150%_at_50%_10%,#161618_40%,#63e_100%)]"></div>
-        </section>
+        </section> */}
       </main>
     </div>
   );
