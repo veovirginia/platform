@@ -38,7 +38,7 @@ const MEMBERS = [
   },
   {
     name: "Clara Grimmelbein",
-    majors: ["Computer Science", "Commerce"],
+    majors: ["Computer Science", "Italian"],
     graduation: "2026",
     picture:
       "https://res.cloudinary.com/dblodzwva/image/upload/v1676318421/clara_photo.png",
