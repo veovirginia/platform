@@ -31,9 +31,7 @@ export default function RootLayout({
       lang="en"
       className={`${libreBaskerville.variable} ${instrumentSans.variable}`}
     >
-      <body>
-        <TRPCReactProvider>{children}</TRPCReactProvider>
-      </body>
+      <body>{children}</body>
     </html>
   );
 }
