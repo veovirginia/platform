@@ -23,12 +23,14 @@ const Navbar = () => {
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger asChild>
-              <Button
-                variant="ghost"
-                className="flex h-10 w-10 items-center p-0"
-              >
-                <CalendarDots size="20" />
-              </Button>
+              <a target="_blank" href="https://lu.ma/veo">
+                <Button
+                  variant="ghost"
+                  className="flex h-10 w-10 items-center p-0"
+                >
+                  <CalendarDots size="20" />
+                </Button>
+              </a>
             </TooltipTrigger>
             <TooltipContent>
               <div className="z-10 rounded border border-gray-200 bg-white px-4 py-2 text-sm shadow-lg">
@@ -43,12 +45,14 @@ const Navbar = () => {
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger asChild>
-              <Button
-                variant="ghost"
-                className="flex h-10 w-10 items-center p-0"
-              >
-                <Envelope size="20" />
-              </Button>
+              <a href="mailto:v1atvirginia@gmail.com">
+                <Button
+                  variant="ghost"
+                  className="flex h-10 w-10 items-center p-0"
+                >
+                  <Envelope size="20" />
+                </Button>
+              </a>
             </TooltipTrigger>
             <TooltipContent>
               <div className="z-10 rounded border border-gray-200 bg-white px-4 py-2 text-sm shadow-lg">
@@ -63,12 +67,14 @@ const Navbar = () => {
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger asChild>
-              <Button
-                variant="ghost"
-                className="flex h-10 w-10 items-center p-0"
-              >
-                <InstagramLogo size="20" />
-              </Button>
+              <a target="_blank" href="https://instagram.com/veoatuva">
+                <Button
+                  variant="ghost"
+                  className="flex h-10 w-10 items-center p-0"
+                >
+                  <InstagramLogo size="20" />
+                </Button>
+              </a>
             </TooltipTrigger>
             <TooltipContent>
               <div className="z-10 rounded border border-gray-200 bg-white px-4 py-2 text-sm shadow-lg">
@@ -83,12 +89,14 @@ const Navbar = () => {
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger asChild>
-              <Button
-                variant="ghost"
-                className="flex h-10 w-10 items-center p-0"
-              >
-                <SiSubstack size="16" />
-              </Button>
+              <a target="_blank" href="https://veovirginia.substack.com">
+                <Button
+                  variant="ghost"
+                  className="flex h-10 w-10 items-center p-0"
+                >
+                  <SiSubstack size="16" />
+                </Button>
+              </a>
             </TooltipTrigger>
             <TooltipContent>
               <div className="z-10 rounded border border-gray-200 bg-white px-4 py-2 text-sm shadow-lg">

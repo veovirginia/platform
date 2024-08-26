@@ -5,7 +5,7 @@ const ContactRow = () => {
   return (
     <div className="mx-auto flex w-full items-center gap-4 py-4">
       <div className="flex w-full flex-row flex-wrap justify-start gap-4 font-medium tracking-wide">
-        <a href="emailto:v1atvirginia@gmail.com">
+        <a href="mailto:v1atvirginia@gmail.com">
           <div className="flex h-10 items-center gap-2 rounded-full border border-indigo-500/25 bg-indigo-500/15 px-4 py-2 text-indigo-500">
             <Envelope size="24" /> v1atvirginia@gmail.com
           </div>
